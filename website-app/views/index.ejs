@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<!--
+Template Name: Bronea
+Author: <a href="http://www.os-templates.com/">OS Templates</a>
+Author URI: http://www.os-templates.com/
+Licence: Free to use under our free template licence terms
+Licence URI: http://www.os-templates.com/template-terms
+-->
+<html lang="">
+<!-- To declare your language - read more here: https://www.w3.org/International/questions/qa-html-language-declarations -->
+<head>
+<title>tiantianmeishi</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="css/layout.css" rel="stylesheet" type="text/css" media="all">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="menu.json"></script>
+
+
+<script>
+window.onclick = function(event) {
+    var modal = document.getElementById('myModal');
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+function checkAndShowModel(){
+
+  var checkList = ["final_dish_price", "final_dish_name", "final_starter_price", "final_starter_name", "final_pickUpLocation", "nickname", "tel"];
+  for (var i = 0; i < checkList.length; i++){
+    document.getElementById(checkList[i]).scrollIntoView();
+    if (document.getElementById(checkList[i]).value == null || document.getElementById(checkList[i]).value == ""){
+      alert("请填写全部点菜信息");
+      return;
+    }
+  }
+
+  var pricevBeforeTax = parseInt(document.getElementById('final_starter_price').value) + parseInt(document.getElementById('final_dish_price').value);
+
+  var priceAfterTax = (pricevBeforeTax * 1.1).toFixed(2).toString();
+
+  document.getElementsByName('final_price').value = priceAfterTax;
+
+  var user_nickname = document.getElementById('nickname').value;
+
+  var user_tel = document.getElementById('tel').value;
+
+  var final_dish_name = document.getElementById('final_dish_name').value;
+
+  var final_starter_name = document.getElementById('final_starter_name').value;
+
+  var final_pickup_location = document.getElementById('final_pickUpLocation').value;
+
+  var confirmation_text = user_nickname + "(" + user_tel + "), 您的订单" + final_dish_name + "和" + final_starter_name + "总计$" + priceAfterTax + "(税后), 请付款成功后在" + final_pickup_location + "领取.";
+
+  document.getElementById('order_confirmation_text').innerHTML = confirmation_text;
+
+
+
+  var dataString = "price=" + priceAfterTax + "&dish=" + final_dish_name + "&starter=" + final_starter_name;
+  $.ajax({
+      url: 'http://tiantianmeishidelicious.com:443/getHash',
+      //url: 'http://localhost:443/getHash',
+      type: 'GET',
+      data: dataString, // or $('#myform').serializeArray()
+      success: function(response) { 
+        document.getElementById('submission_login').value = response.login;
+        document.getElementById('submission_amount').value = priceAfterTax;
+        document.getElementById('submission_sequence').value = response.sequence;
+        document.getElementById('submission_timestamp').value = response.timeStamp;
+        document.getElementById('submission_currency').value = response.currency;
+        document.getElementById('submission_hash').value = response.hash;
+        document.getElementById('submission_show_form').value = response.showForm;
+       }
+  });
+
+  // Get the modal
+  var modal = document.getElementById('myModal');
+
+  // When the user clicks the button, open the modal 
+  
+  modal.style.display = "block";
+
+
+}
+
+function closeModel(){
+    // Get the modal
+  var modal = document.getElementById('myModal');
+
+  // When the user clicks the button, open the modal 
+  
+  // modal.style.display = "block";
+
+
+  // When the user clicks on <span> (x), close the modal
+  
+   modal.style.display = "none";
+  // }
+
+  // When the user clicks anywhere outside of the modal, close it
+
+}
+
+
+</script>
+
+<script>
+$(document).ready(function(){
+    myDishes = data.dishes;
+    myStarters = data.starters;
+    mySides = data.sides;
+    myLocations = data.locations;
+    var i = 0;
+    for(var key in myDishes){
+
+      var $a = $("<a>", {id: "disha" + myDishes[key].id.toString(), href: "#"});
+      $a.append(myDishes[key].title + " $" + myDishes[key].price.toString());
+      var $h6 = $("<h6>", {id: "dishh6" + myDishes[key].id.toString(), class: "heading font-x1"});
+      var $article = $("<article>", {id: "dishArticle" + myDishes[key].id.toString(), class: "bgded overlay", style:"background-image:url('"+ myDishes[key].url +"');"});
+      var liClassStr = (i%3==0)?"one_third first btmspace-30": "one_third btmspace-30";
+      var $li = $("<li>", {id: "dishli" + myDishes[key].id.toString(), class: liClassStr});
+      var $frame = $("<a>", {id: myDishes[key].title, href: "#startersHeading", onclick:"changeSelectedDish(this); return true;", name:"dishes"});
+      $h6.append($a);
+      $article.append($h6);
+      $li.append($article);
+      $frame.append($li);
+      $('#dishesPage').append($frame);
+      i = i + 1;
+
+    }
+
+    i = 0;
+    for(var key in myStarters){
+        var $a = $("<a>", {id: "startera" + myStarters[key].id.toString(), href: "#"});
+        $a.append(myStarters[key].title + " $" + myStarters[key].price.toString());
+        var $h6 = $("<h6>", {id: "starterh6" + myStarters[key].id.toString(), class: "heading font-x1"});
+        var $article = $("<article>", {id: "starterArticle" + myStarters[key].id.toString(), class: "bgded overlay", style:"background-image:url('"+ myStarters[key].url +"');"});
+        var liClassStr = (i%3==0)?"one_third first btmspace-30": "one_third btmspace-30";
+        var $li = $("<li>", {id: "starterli" + myStarters[key].id.toString(), class: liClassStr});
+        var $frame = $("<a>", {id: myStarters[key].title, href:"#pickUpLocationsHeading", onclick:"changeSelectedStarter(this)", name:"starters"});
+        $h6.append($a);
+        $article.append($h6);
+        $li.append($article);
+        $frame.append($li);
+        $('#startersPage').append($frame);
+        i = i + 1;
+    }
+
+    for(var key in mySides){
+      var $a = $("<a>", {id: "sidea" + mySides[key].id.toString(), href: "#startersSubHeader"});
+      $a.append(mySides[key].title);
+      $('#startersSubHeader').append($a);
+    }
+
+    i = 0;
+    for(var key in myLocations){
+        var $a = $("<a>", {id: "locationa" + myLocations[key].id.toString(), href: "#"});
+        $a.append(myLocations[key].title + "(" + myLocations[key].description) + ")";
+        var $h6 = $("<h6>", {id: "locationh6" + myLocations[key].id.toString(), class: "heading font-x1"});
+        var $article = $("<article>", {id: "locationArticle" + myLocations[key].id.toString(), class: "bgded overlay", style:"background-image:url('"+ myLocations[key].url +"');"});
+        var liClassStr = (i%2==0)?"one_half first btmspace-30": "one_half btmspace-30";
+        var $li = $("<li>", {id: "locationli" + myLocations[key].id.toString(), class: liClassStr});
+        var $mapLink = $("<a>", { href:myLocations[key].mapUrl});
+        $mapLink.append("Google Maps");
+        var $frame = $("<a>", {id: myLocations[key].title, href:"#userContactHeading", onclick:"changeSelectedPickUpLocation(this)", name:"pickUpLocations"});
+        $h6.append($a);
+        $article.append($h6);
+        $li.append($article);
+        $frame.append($li);
+        // $frame.append($mapLink);
+        $('#pickUpLocationsPage').append($frame);
+        i = i + 1;
+    }
+
+
+});
+</script>
+
+<script>
+function changeSelectedDish(param) {
+  myDishes = data.dishes;
+
+  var dishes = document.getElementsByName('dishes');
+  var selected_dish = param.id;
+  var selected_dish_price = 0;
+
+  for(var i = 0; i < dishes.length; i++){
+      console.log("loop");
+      if(dishes[i].id == selected_dish){
+        var dish = document.getElementById(selected_dish);
+        dish.className = "selected";
+        selected_dish_price = myDishes[selected_dish].price;
+
+      } else {
+        var dish = document.getElementById(dishes[i].id);
+        dish.className = "";
+      }
+  }
+  
+  document.getElementById('final_dish_name').value = selected_dish;
+  document.getElementById('final_dish_price').value = selected_dish_price;
+
+}
+</script>
+
+<script>
+function changeSelectedStarter(param) {
+  myStarters = data.starters;
+
+  var starters = document.getElementsByName('starters');
+  var selected_starter = param.id;
+  var selected_starter_price = 0;
+
+  for(var i = 0; i < starters.length; i++){
+      if(starters[i].id == selected_starter){
+        var starter = document.getElementById(selected_starter);
+        starter.className = "selected";
+        selected_starter_price = myStarters[selected_starter].price;
+
+      } else {
+        var starter = document.getElementById(starters[i].id);
+        starter.className = "";
+        
+      }
+  }
+
+  document.getElementById('final_starter_name').value = selected_starter;
+  document.getElementById('final_starter_price').value = selected_starter_price;
+
+}
+</script>
+
+<script>
+function changeSelectedPickUpLocation(param) {
+
+  var pickUpLocations = document.getElementsByName('pickUpLocations');
+  var selectedPickUpLocation = param.id;
+
+  for(var i = 0; i < pickUpLocations.length; i++){
+      if(pickUpLocations[i].id == selectedPickUpLocation){
+        var pickUpLocation = document.getElementById(selectedPickUpLocation);
+        pickUpLocation.className = "selected";
+
+      } else {
+        var pickUpLocation = document.getElementById(pickUpLocations[i].id);
+        pickUpLocation.className = "";
+      }
+  }
+
+  document.getElementById('final_pickUpLocation').value = selectedPickUpLocation;
+
+}
+</script>
+
+<script>
+// function calculatePickUpLocation() {
+//   var pickupLocations = document.getElementById('pickupLocationForm');
+//   var selected_pickupLocation = "";
+
+//   for(var i = 0; i < pickupLocations.length; i++){
+//       if(pickupLocations[i].checked){
+//           selected_pickupLocation = pickupLocations[i].value;
+//       }
+//   }
+//   document.getElementById('final_pickup_location').innerHTML = selected_pickupLocation;
+  
+//   var wechat_nickname = document.getElementById('input_wechat_nickname');
+//   var input_wechat_nickname = "";
+//   console.log(wechat_nickname);
+//   input_wechat_nickname = wechat_nickname.value;
+
+//   document.getElementById('final_input_wechat_nickname').innerHTML = input_wechat_nickname;
+
+
+//   var phone = document.getElementById('input_phone');
+//   var input_phone = "";
+//   input_phone = phone.value;
+
+//   document.getElementById('final_input_phone').innerHTML = input_phone;
+
+//   var email = document.getElementById('input_email');
+//   var input_email = "";
+//   input_email = email.value;
+  
+//   document.getElementById('final_input_email').innerHTML = input_email;
+
+//   var dishes = document.getElementById('dishForm');
+//   var selected_dish = "";
+//   var selected_dish_price = 0;
+//   for(var i = 0; i < dishes.length; i++){
+//       if(dishes[i].checked){
+//           selected_dish = dishes[i].id;
+//           selected_dish_price = dishes[i].value;
+//       }
+//   }
+  
+//   var sides = document.getElementById('sideForm');
+//   var selected_side = "";
+//   var selected_side_price = 0;
+//   for(var i = 0; i < sides.length; i++){
+//       if(sides[i].checked){
+//           selected_side = sides[i].id;
+//           selected_side_price = sides[i].value;
+//       }
+//   }
+
+//   var totalAmount = (parse(selected_dish_price) + parseFloat(selected_side_price)) * 1.1).toFixed(2);
+//   var totalAmountString = totalAmount.toString();
+
+//   document.getElementById('final_dish_name').innerHTML = selected_dish + "+" + selected_side;
+//   document.getElementById('final_price').innerHTML = totalAmountString + "(税后)";
+ 
+
+//   var dataString = "price=" + totalAmountString;
+//   $.ajax({
+//     //url: 'http://tiantianmeishidelicious.com:443/getHash',
+//     url: 'http://localhost:443/getHash',
+//     type: 'GET',
+//     data: dataString, // or $('#myform').serializeArray()
+//     success: function(response) { 
+//       document.getElementById('submission_login').value = response.login;
+//       document.getElementById('submission_amount').value = totalAmountString;
+//       document.getElementById('submission_sequence').value = response.sequence;
+//       document.getElementById('submission_timestamp').value = response.timeStamp;
+//       document.getElementById('submission_currency').value = response.currency;
+//       document.getElementById('submission_hash').value = response.hash;
+//       document.getElementById('submission_show_form').value = response.showForm;
+//      }
+// });
+// }
+</script>
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links
+  $("a").on('click', function(event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 800, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+});
+</script>
+  
+</head>
+<body id="top">
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- Top Background Image Wrapper -->
+<div class="bgded overlay" style="background-image:url('images/demo/backgrounds/01.jpg');"> 
+  <!-- ################################################################################################ -->
+  <div class="wrapper row0">
+    <div id="topbar" class="hoc clear"> 
+      <!-- ################################################################################################ -->
+      <div class="fl_left">
+        <ul class="nospace">
+          <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
+          <li><a href="#">CONTACT</a></li>
+        </ul>
+      </div>
+      <div class="fl_right">
+        <ul >
+          <li><i class="fa fa-phone"></i> +01 (425) 429 8975</li>
+          <li><i class="fa fa-weixin"></i> ttms99999</li>
+        </ul>
+      </div>
+      <!-- ################################################################################################ -->
+    </div>
+  </div>
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear"> 
+      <!-- ################################################################################################ -->
+      <div id="logo" class="fl_left">
+        <h1><a href="index.html">西雅图天天美食</a></h1>
+      </div>
+      <!-- ################################################################################################ -->
+      <nav id="mainav" class="fl_right">
+        <ul class="clear">
+          <li class="active">
+            <a href="/images/demo/backgrounds/taotao-wechat-qr.jpg">联系作者</a>
+          </li>
+        </ul>
+      </nav>
+      <!-- ################################################################################################ -->
+    </header>
+  </div>
+
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+  <!-- ################################################################################################ -->
+
+  <div class="wrapper">
+    <div id="pageintro" class="hoc clear"> 
+      <!-- ################################################################################################ -->
+      <article>
+        <div>
+          <p class="heading">每周一至周五中午准时送餐，添加微信得知更多细节</p>
+          <h1 class="heading">适合中国口味的午餐</h1>
+          <p>移动端小程序即将推出，敬请期待</p>
+        </div>
+        <footer>
+          <ul class="nospace inline pushright">
+            <li><a id="startOrderingButton" class="btn" href="#dishesHeading">开始订餐</a></li>
+          </ul>
+        </footer>
+      </article>
+      <!-- ################################################################################################ -->
+    </div>
+  </div>
+  <!-- ################################################################################################ -->
+</div>
+
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row2">
+  <div class="hoc container clear"> 
+    <!-- ################################################################################################ -->
+    <div id="dishesHeading" class="sectiontitle">
+      <h6 class="heading">今日主菜</h6>
+      <p>请点击选择一样主菜</p>
+      <input type="hidden" name="checkList" id="final_dish_name" value="">
+      <input type="hidden" name="checkList" id="final_dish_price" value="">
+    </div>
+    <ul id="dishesPage" class="nospace group services">
+    </ul>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row3">
+  <div class="hoc container clear"> 
+    <div id="startersHeading" class="sectiontitle">
+      <h6 class="heading">今日配菜</h6>
+      <p id="startersSubHeader">选配菜送小凉菜</p>
+      <input type="hidden" name="checkList" id="final_starter_name" value="">
+      <input type="hidden" name="checkList" id="final_starter_price" value="">
+    </div>
+    <!-- ################################################################################################ -->
+    <ul id="startersPage" class="nospace group services">
+ 
+    </ul>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+
+<div class="wrapper row2">
+  <div class="hoc container clear"> 
+    <div id="pickUpLocationsHeading" class="sectiontitle">
+      <h6 class="heading">取餐地点</h6>
+      <p>请点击选择取餐地点</p>
+      <input type="hidden" name="checkList" id="final_pickUpLocation" value="">
+    </div>
+
+    <!-- ################################################################################################ -->
+    <ul id="pickUpLocationsPage" class="nospace group services">
+    </ul>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+<div class="wrapper row3">
+  <main class="hoc container clear"> 
+    <div id="userContactHeading" class="sectiontitle">
+      <h6 class="heading">联系方式</h6>
+      <p>请填写联系方式</p>
+    </div>
+    <!-- main body -->
+    <!-- ################################################################################################ -->
+    <div class="content"> 
+      <!-- ################################################################################################ -->
+      <div id="comments">
+        <form action="#">
+          <div class="one_third first">
+            <label for="nickname">微信昵称 <span>*</span></label>
+            <input type="text" name="checkList" id="nickname" value="" size="25">
+          </div>
+          <div class="one_third">
+            <label for="tel">电话 <span>*</span></label>
+            <input type="tel" name="checkList" id="tel" value="" size="25" >
+          </div>
+          <div class="one_third">
+            <label for="note">备注</label>
+            <input type="text" name="note" id="note" value="" size="25">
+          </div>
+          <input type="hidden" name="final_price" id="final_price" value="">
+          
+        </form>
+        
+      </div>
+      <button id="placeOrder" class="btn inverse" onclick="checkAndShowModel()">前去下单</button>
+      <!-- ################################################################################################ -->
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- / main body -->
+    <div class="clear"></div>
+  </main>
+</div>
+                       <!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close" onclick="closeModel()">&times;</span>
+      <h2>确认页</h2>
+    </div>
+    <div class="modal-body">
+      <p id="order_confirmation_text"></p>
+    </div>
+    <div class="modal-footer">
+      <form  id="submissionButton" action="https://checkout.globalgatewaye4.firstdata.com/payment" method="post"> 
+
+          <input id="submission_login" name="x_login" value="" type="hidden"> 
+
+          <input id="submission_amount" name="x_amount" value="" type="hidden"> 
+
+          <input id="submission_sequence" name="x_fp_sequence" value="" type="hidden"> 
+
+          <input id="submission_timestamp" name="x_fp_timestamp" value="" type="hidden"> 
+
+          <input id="submission_currency" name="x_currency_code" value="" type="hidden"> 
+
+          <input id="submission_hash" name="x_fp_hash" value="" type="hidden"> 
+
+          <input id="submission_show_form" name="x_show_form" value="" type="hidden"> 
+
+          <input id="submission_text" class="btn medium" value="在线付款" type="submit"> 
+      </form>
+                  
+    </div>
+  </div>
+
+</div>
+
+<!-- ################################################################################################
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- <div id="confirmationPage" class="wrapper bgded overlay" style="background-image:url('images/demo/backgrounds/04.jpg');">
+  <div class="wrapper row0">
+    <main class="hoc container clear">
+    <div class="content">  
+      ################################################################################################
+      <div class="sectiontitle" style="margin-bottom:30px;margin-top:40px">
+        <h2 class="heading">你的订单</h2>
+        <p>请确认菜品和价格</p>
+      </div> -->
+
+
+<!--       <form  id="submissionButton" action="https://checkout.globalgatewaye4.firstdata.com/payment" method="post"> 
+
+          <input id="submission_login" name="x_login" value="" type="hidden"> 
+
+          <input id="submission_amount" name="x_amount" value="" type="hidden"> 
+
+          <input id="submission_sequence" name="x_fp_sequence" value="" type="hidden"> 
+
+          <input id="submission_timestamp" name="x_fp_timestamp" value="" type="hidden"> 
+
+          <input id="submission_currency" name="x_currency_code" value="" type="hidden"> 
+
+          <input id="submission_hash" name="x_fp_hash" value="" type="hidden"> 
+
+          <input id="submission_show_form" name="x_show_form" value="" type="hidden"> 
+
+          <input id="submission_text" class="btn medium" value="在线付款" type="hidden"> 
+      </form> -->
+<!--     </div>
+  </main>
+  </form>
+ </div>
+</div> -->
+
+<!-- ################################################################################################
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- End Top Background Image Wrapper -->
+<div class="wrapper row4">
+  <footer id="footer" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <div class="one_half first">
+      <h6 class="heading">天天美食外卖订餐</h6>
+      <p class="btmspace-30">每周一至周五中午准时送餐，添加微信得知更多细节</p>
+      <ul class="nospace linklist contact">
+        <li><i class="fa fa-map-marker"></i>
+          <address>
+          Great Seattle Area, WA 98100, USA
+          </address>
+        </li>
+        <li><i class="fa fa-phone"></i> +01 (425) 429 8975</li>
+        <li><i class="fa fa-weixin"></i> ttms99999</li>
+      </ul>
+    </div>
+    <!-- ################################################################################################ -->
+  </footer>
+</div>
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<!-- ################################################################################################ -->
+<div class="wrapper row5">
+  <div id="copyright" class="hoc clear"> 
+    <!-- ################################################################################################ -->
+    <p class="fl_left">Copyright &copy; 2017 - All Rights Reserved - <a href="#">www.tiantianmeishidelicious.com</a></p>
+    <!-- ################################################################################################ -->
+  </div>
+</div>
+
+
+<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
+<!-- JAVASCRIPTS -->
+<script src="layout/scripts/jquery.min.js"></script>
+<script src="layout/scripts/jquery.backtotop.js"></script>
+<script src="/layout/scripts/jquery.mobilemenu.js"></script>
+
+</body>
+</html>
