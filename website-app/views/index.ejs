@@ -1,642 +1,741 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <!--
-Template Name: Bronea
-Author: <a href="http://www.os-templates.com/">OS Templates</a>
-Author URI: http://www.os-templates.com/
-Licence: Free to use under our free template licence terms
-Licence URI: http://www.os-templates.com/template-terms
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html lang="">
-<!-- To declare your language - read more here: https://www.w3.org/International/questions/qa-html-language-declarations -->
-<head>
-<title>tiantianmeishi</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<link href="css/layout.css" rel="stylesheet" type="text/css" media="all">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="menu.json"></script>
+<html>
+	<head>
+		<title>天天美食</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+		<script type="text/javascript" src="menu.json"></script>
+		<script>
+			$(document).ready(function(){
+			    myDishes = data.dishes;
+			    myStarters = data.starters;
+			    mySides = data.sides;
+			    myLocations = data.locations;
+			    var i = 0;
+			    // console.log("data");
+			    // console.log(myDishes);
+			    for(var key in myDishes){
+			    	// console.log("i");
+			      var $tr = $("<tr>");
+			      
+			      $a = $("<a>");
+			      $a.attr("onclick","selectDish(this)");
+			      $a.attr("href","#selectStarter");
+			      var $td1 = $("<td>");
+			      var $img = $("<img>");
+			      $img.attr('src', myDishes[key].url);
+			      $td1.append($img);
+			      var $td2 = $("<td>");
+			      $a1 = $("<a>");
+			      $a1.append(myDishes[key].title);
+			      $a2 = $("<a>");
+			      $a2.append("$");
+			      $a3 = $("<a>");
+			      $a3.append(myDishes[key].price);
+
+			      $td2.append($a1);
+			      $td2.append($a2);
+			      $td2.append($a3);
+			      $a.append($td1);
+			      $a.append($td2);
+			      $tr.append($a);
+
+			      $('#dishlist').append($tr);
+			      i = i + 1;
+			    }
+
+			    i = 0;
+			    // console.log("data");
+			    // console.log(myDishes);
+			    for(var key in myStarters){
+			    	// console.log("i");
+				  var div_str = (i%2==0)?"field first": "field";
+			      var $div = $("<div>", {class: div_str});
+			      var $input = $("<input>", {type:"radio", id: "starterOption" + myStarters[key].id.toString(), name: "starterOption"});
+			      $("input").prop('required',true);
+			      var $label = $("<label>", {for:"starterOption" + myStarters[key].id.toString()});
+			      var $a1 = $("<a>");
+			      $a1.append(myStarters[key].title);
+			      $label.append($a1);
+			      $label.append("     +$");
+			      var $a2 = $("<a>");
+			      $a2.append(myStarters[key].price.toString());
+			      $label.append($a2);
+			      $div.append($input);
+			      $div.append($label);
+			      
+			      $('#starterlist').prepend($div);
+			      i = i + 1;
+			    }
+
+			    // for(var key in mySides){
+			    //   var $a = $("<a>", {id: "sidea" + mySides[key].id.toString(), href: "#startersSubHeader"});
+			    //   $a.append(mySides[key].title);
+			    //   $('#startersSubHeader').append($a);
+			    // }
+
+			    i = 0;
+			    for(var key in myLocations){
+					  var div_str = (i%2==0)?"field half first": "field half";
+				      var $div = $("<div>", {class: div_str});
+				      var $input = $("<input>", {type:"radio", id: "locationOption" + myLocations[key].id.toString(), name: "locationOption"});
+				      $("input").prop('required',true);
+				      var $label = $("<label>", {for:"locationOption" + myLocations[key].id.toString()});
+				      var $a = $("<a>");
+				      $a.attr("href", myLocations[key].mapUrl);
+				      $a.append(myLocations[key].description);
+				      $a1 = $("<a>");
+				      $a1.append(myLocations[key].title);
+				      $label.append($a1)
+				      $label.append($a);
+				      $div.append($input);
+				      $div.append($label);
+			        $('#pickupLocation').append($div);
+			        i = i + 1;
+			    }
 
 
-<script>
-window.onclick = function(event) {
-    var modal = document.getElementById('myModal');
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+			});
+			</script>
+			<script>
+				function selectDish(param) {
+					console.log(param);
+					var selectedDishImg = document.getElementById('selectedDishImg');
+					console.log(selectedDishImg);
+					selectedDishImg.setAttribute('src', param.children[0].firstElementChild['src']);
+					var selectedDishTitle = document.getElementById('selectedDishTitle');
+					selectedDishTitle.innerText = param.children[1].innerText;
+
+					var selectedDish = document.getElementById('confirm_selected_dish');
+					var selectedDishPrice = document.getElementById('confirm_selected_dish_price');
+					selectedDish.innerText = param.children[1].children[0].innerText;
+					selectedDishPrice.innerText = param.children[1].children[2].innerText;
+
+				}
+			</script>
+			<script>
+				function selectStarter() {
+					var starterInputs = document.getElementById('starterlist');
+					console.log(starterInputs);
+					// var note = document.getElementById('confirm_note');
+					// console.log(document.getElementById('note'));
+					// console.log(document.getElementById('note').value);
+					// note.innerHTML = document.getElementById('note').value;
+					for (var i = 0; i < starterInputs.children.length; i ++){
+						if (starterInputs.children[i].children[0].checked) {
+							var selectedStarter = document.getElementById('confirm_selected_starter');
+							var selectedStarterPrice = document.getElementById('confirm_selected_starter_price');
+							selectedStarter.innerText = starterInputs.children[i].children[1].children[0].innerText;
+							console.log(selectedStarter.innerText);
+							selectedStarterPrice.innerText = starterInputs.children[i].children[1].children[1].innerText;
+							console.log(selectedStarterPrice.innerText);
+							return true;
+						}
+					}
+					alert("请选择配菜");
+					return false;
+					
+
+				}
+			</script>
+			<script>
+				function checkPickUpLocation() {
+					var pickupInputs = document.getElementById('pickupLocation');
+					console.log(pickupInputs);
+					for (var i = 0; i < pickupInputs.children.length; i ++){
+						if (pickupInputs.children[i].children[0].checked) {
+							var selectedPickUpLocation = document.getElementById('confirm_pickup_location');
+							selectedPickUpLocation.innerText = pickupInputs.children[i].children[1].children[0].innerText;
+							return true;
+						}
+					}
+					
+					return false;
+				}
+
+				function checkNickName() {
+					var name = document.getElementById('name');
+					console.log(name);
+					if (name.value == "") {
+						return false
+					}
+					var selectedName = document.getElementById('confirm_name');
+					selectedName.innerText = name.value;
+					return true;
+				}
+
+
+				function checkPhone() {
+					var phone = document.getElementById('phone');
+					console.log(phone);
+					if (phone.value == "" || phone.value==null) {
+						return false
+					}
+
+					var selectedPhone = document.getElementById('confirm_phone');
+					selectedPhone.innerText = phone.value;
+					
+					return true;
+				}
+
+				function selectPickUp() {
+					if (!checkPickUpLocation()) {
+						alert("请选择取餐地点");
+						return false
+					}
+					
+					if 	(!checkNickName()) {
+						alert("请填写姓名");
+						return false
+					}
+
+					if (!checkPhone()) {
+						alert("请填写电话");
+						return false
+					}
+
+					var dishStr = document.getElementById("confirm_selected_dish").innerText;
+					var dishPriceStr = document.getElementById("confirm_selected_dish_price").innerText;
+					var starterStr = document.getElementById("confirm_selected_starter").innerText;
+					var starterPriceStr = document.getElementById("confirm_selected_starter_price").innerText;
+					console.log(dishStr);
+					console.log(starterStr);
+
+					var totalTax = ((parseFloat(dishPriceStr) + parseFloat(starterPriceStr)) * 0.1);
+					var totalTaxString = totalTax.toFixed(2);
+					var totalAmountBeforeTax = ((parseFloat(dishPriceStr) + parseFloat(starterPriceStr)) * 1.0);
+					var totalAmount = totalTax + totalAmountBeforeTax;
+					var totalAmountString = totalAmount.toFixed(2);
+					
+					document.getElementById('confirm_total').innerHTML = totalAmountString;
+					document.getElementById('confirm_tax').innerHTML = totalTaxString;
+					 
+					var dataString = "price=" + totalAmountString;
+					$.ajax({
+					    //url: 'http://tiantianmeishidelicious.com:443/getHash',
+					    url: 'http://localhost:443/getHash',
+					    type: 'GET',
+					    data: dataString, // or $('#myform').serializeArray()
+					    success: function(response) { 
+					      document.getElementById('submission_login').value = response.login;
+					      document.getElementById('submission_amount').value = totalAmountString;
+					      document.getElementById('submission_sequence').value = response.sequence;
+					      document.getElementById('submission_timestamp').value = response.timeStamp;
+					      document.getElementById('submission_currency').value = response.currency;
+					      document.getElementById('submission_hash').value = response.hash;
+					      document.getElementById('submission_show_form').value = response.showForm;
+					      document.getElementById('submission_nickname').value = document.getElementById('confirm_name').innerText;
+					      document.getElementById('submission_phone').value = document.getElementById('confirm_phone').innerText;
+					      document.getElementById('submission_pickup_location').value = document.getElementById('confirm_pickup_location').innerText;
+					      document.getElementById('submission_description').value = dishStr + "+" + starterStr;
+					      // document.getElementById('submission_note').value = document.getElementById("confirm_note").innerText;
+					     }
+					});
+
+
+					return true;
+
+				}
+
+			</script>
+	</head>
+	<body>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="content">
+							<div class="inner">
+								<h1>天天美食</h1>
+								<p>大西雅图中餐外卖</p>
+							</div>
+						</div>
+						<nav>
+							<ul>
+								<li><a href="#start">开始订餐</a></li>
+<!-- 								<li><a href="#selectStarter">选择配菜</a></li>
+								<li><a href="#elements">elements</a></li>
+								<li><a href="#confirm">Confirmation</a></li>
+								<li><a href="#about">about</a></li>
+								<li><a href="#pickupInfo">PickupInfo</a></li> -->
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Start -->
+							<article id="start">
+								<h2 class="major">今日主菜</h2>
+								
+								<p>点击选择你想要的主菜.</p>
+
+								<section>
+									<div class="table-wrapper">
+
+										<table>
+											<tbody id = "dishlist">
+											</tbody>
+										</table>
+									</div>
+								</section>
+
+
+							</article>
+						<!-- Select Starters -->
+							<article id="selectStarter">
+							    <span class="image main"><img id="selectedDishImg" src="images/pic02.jpg" alt="" /></span>
+								<h2 id="selectedDishTitle" class="major"></h2>
+							
+
+								<section>
+									<p>选择你想要的配菜 <span>*</span></p>
+									<form id="starterForm">
+										<div id = "starterlist">
+
+										</div>
+<!-- 										<div class="field first">
+											<label for="note">备注</label>
+											<input type="text" name="note" id="note" placeholder="Your Note Here" required maxlength="16"/>
+										</div> -->
+										<ul class="actions first">
+											<!-- <li><input type="submit" value="下一步" class="special" /></li> -->
+											<li><a href="#pickupInfo" onclick="return selectStarter()" class="button special" />下一步</a></li>
+										</ul>
+									</form>
+								</section>
+							</article>
+
+						<!-- Contact -->
+							<article id="pickupInfo">
+								<h2 class="major">Contact</h2>
+								<form id="pickupForm">
+									<div class="field">
+										<label for="pickupLocation">选择取餐地点 <span>*</span></label>
+										<div id="pickupLocation">
+
+										</div>
+									</div>
+									<div class="field half first">
+										<label for="name">Name <span>*</span></label>
+										<input type="text" name="name" id="name" placeholder="Wechat Nickname" required maxlength="32"/>
+									</div>
+									<div class="field half first">
+										<label for="phone">Phone <span>*</span></label>
+										<input type="text" name="phone" id="phone" placeholder="888-888-8888" required maxlength="32"/>
+									</div>
+									<ul class="actions">
+										<!-- <li><input type="submit" value="下单" class="special" /></li> -->
+										<li><a href="#confirm" onclick="return selectPickUp()" class="button special" />下单</a></li>
+									</ul>
+								</form>
+							</article>
+
+						<!-- Contact -->
+							<article id="confirm">
+								<h2 class="major">确认订单</h2>
+									<div class="table-wrapper">
+										<table>
+											<thead>
+												<tr>
+													<th>选项</th>
+													<th>明细</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>姓名</td>
+													<td id="confirm_name"></td>
+												</tr>
+												<tr>
+													<td>电话</td>
+													<td id="confirm_phone"></td>
+													
+												</tr>
+												<tr>
+													<td>取餐地点</td>
+													<td id="confirm_pickup_location"></td>
+													
+												</tr>
+<!-- 												<tr>
+													<td>备注</td>
+													<td id="confirm_note"></td>
+													
+												</tr> -->
+												<tr>
+													<td id="confirm_selected_dish"></td>
+													<td id="confirm_selected_dish_price"></td>
+													
+												</tr>
+												<tr>
+													<td id="confirm_selected_starter"></td>
+													<td id="confirm_selected_starter_price"></td>
+												</tr>
+												<tr>
+													<td>Tax</td>
+													<td id="confirm_tax"></td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td>Total</td>
+													<td id="confirm_total"></td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+<!-- 									<form  id="submissionButton" action="https://checkout.globalgatewaye4.firstdata.com/payment" method="post"> 
+										  <input id="submission_login" name="x_login" value="" type="hidden" required> 
+
+										  <input id="submission_amount" name="x_amount" value="" type="hidden" required> 
+
+										  <input id="submission_sequence" name="x_fp_sequence" value="" type="hidden" required> 
+
+										  <input id="submission_timestamp" name="x_fp_timestamp" value="" type="hidden" required> 
+
+										  <input id="submission_currency" name="x_currency_code" value="" type="hidden" required> 
+
+										  <input id="submission_hash" name="x_fp_hash" value="" type="hidden" required> 
+
+										  <input id="submission_show_form" name="x_show_form" value="" type="hidden" required> 
+
+										  <input id="submission_text" class="special" value="在线付款" type="submit"> 
+									</form> -->
+									  <form  id="submissionButton" action="https://demo.globalgatewaye4.firstdata.com/payment" method="post"> 
+
+								          <input id="submission_login" name="x_login" value="" type="hidden"> 
+
+								          <input id="submission_amount" name="x_amount" value="" type="hidden" maxlength="32"> 
+
+								          <input id="submission_sequence" name="x_fp_sequence" value="" type="hidden"> 
+
+								          <input id="submission_timestamp" name="x_fp_timestamp" value="" type="hidden"> 
+
+								          <input id="submission_currency" name="x_currency_code" value="" type="hidden"> 
+
+								          <input id="submission_hash" name="x_fp_hash" value="" type="hidden"> 
+
+								          <input id="submission_show_form" name="x_show_form" value="" type="hidden">
+
+								          <input id="submission_button" class="button special" value="在线付款" type="submit"> 
+
+								          <input name="enable_level3_processing" type="hidden" value="TRUE" />
+
+								          <input id="submission_nickname" name="x_cust_id" type="hidden" value="" maxlength="32"/>
+
+								          <input id="submission_pickup_location" name="x_ship_to_address" type="hidden" value="" />
+								          
+								          <input id="submission_phone" name="x_phone" type="hidden" value="" maxlength="32"/>
+
+								          <input id="submission_description" name="x_description" type="hidden" value="" />
+
+<!-- 								          <input id="submission_note" name="x_note" type="hidden" value="" maxlength="16"/> -->
+								      </form>
+<!-- 								<ul class="icons">
+									<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+									<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+									<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+									<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+								</ul> -->
+							</article>
+
+						<!-- Work -->
+							<article id="work">
+								<h2 class="major">Work</h2>
+								<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
+								<p>Adipiscing magna sed dolor elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices.</p>
+								<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet feugiat tempus.</p>
+							</article>
+
+						<!-- About -->
+							<article id="about">
+								<h2 class="major">About</h2>
+								<span class="image main"><img src="images/pic03.jpg" alt="" /></span>
+								<p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+							</article>
+
+
+
+						<!-- Elements -->
+							<article id="elements">
+								<h2 class="major">Elements</h2>
+
+								<section>
+									<h3 class="major">Text</h3>
+									<p>This is <b>bold</b> and this is <strong>strong</strong>. This is <i>italic</i> and this is <em>emphasized</em>.
+									This is <sup>superscript</sup> text and this is <sub>subscript</sub> text.
+									This is <u>underlined</u> and this is code: <code>for (;;) { ... }</code>. Finally, <a href="#">this is a link</a>.</p>
+									<hr />
+									<h2>Heading Level 2</h2>
+									<h3>Heading Level 3</h3>
+									<h4>Heading Level 4</h4>
+									<h5>Heading Level 5</h5>
+									<h6>Heading Level 6</h6>
+									<hr />
+									<h4>Blockquote</h4>
+									<blockquote>Fringilla nisl. Donec accumsan interdum nisi, quis tincidunt felis sagittis eget tempus euismod. Vestibulum ante ipsum primis in faucibus vestibulum. Blandit adipiscing eu felis iaculis volutpat ac adipiscing accumsan faucibus. Vestibulum ante ipsum primis in faucibus lorem ipsum dolor sit amet nullam adipiscing eu felis.</blockquote>
+									<h4>Preformatted</h4>
+									<pre><code>i = 0;
+
+while (!deck.isInOrder()) {
+    print 'Iteration ' + i;
+    deck.shuffle();
+    i++;
 }
 
-function checkAndShowModel(){
-
-  var checkList = ["final_dish_price", "final_dish_name", "final_starter_price", "final_starter_name", "final_pickUpLocation", "nickname", "tel"];
-  for (var i = 0; i < checkList.length; i++){
-    document.getElementById(checkList[i]).scrollIntoView();
-    if (document.getElementById(checkList[i]).value == null || document.getElementById(checkList[i]).value == ""){
-      alert("请填写全部点菜信息");
-      return;
-    }
-  }
-
-  var pricevBeforeTax = parseInt(document.getElementById('final_starter_price').value) + parseInt(document.getElementById('final_dish_price').value);
-
-  var priceAfterTax = (pricevBeforeTax * 1.1).toFixed(2).toString();
-
-  document.getElementsByName('final_price').value = priceAfterTax;
-
-  var user_nickname = document.getElementById('nickname').value;
-
-  var user_tel = document.getElementById('tel').value;
-
-  var final_dish_name = document.getElementById('final_dish_name').value;
-
-  var final_starter_name = document.getElementById('final_starter_name').value;
-
-  var final_pickup_location = document.getElementById('final_pickUpLocation').value;
-
-  var confirmation_text = user_nickname + "(" + user_tel + "), 您的订单" + final_dish_name + "和" + final_starter_name + "总计$" + priceAfterTax + "(税后), 请付款成功后在" + final_pickup_location + "领取.";
-
-  document.getElementById('order_confirmation_text').innerHTML = confirmation_text;
-
-
-
-  var dataString = "price=" + priceAfterTax + "&dish=" + final_dish_name + "&starter=" + final_starter_name;
-  $.ajax({
-      url: 'http://tiantianmeishidelicious.com:443/getHash',
-      //url: 'http://localhost:443/getHash',
-      type: 'GET',
-      data: dataString, // or $('#myform').serializeArray()
-      success: function(response) { 
-        document.getElementById('submission_login').value = response.login;
-        document.getElementById('submission_amount').value = priceAfterTax;
-        document.getElementById('submission_sequence').value = response.sequence;
-        document.getElementById('submission_timestamp').value = response.timeStamp;
-        document.getElementById('submission_currency').value = response.currency;
-        document.getElementById('submission_hash').value = response.hash;
-        document.getElementById('submission_show_form').value = response.showForm;
-       }
-  });
-
-  // Get the modal
-  var modal = document.getElementById('myModal');
-
-  // When the user clicks the button, open the modal 
-  
-  modal.style.display = "block";
-
-
-}
-
-function closeModel(){
-    // Get the modal
-  var modal = document.getElementById('myModal');
-
-  // When the user clicks the button, open the modal 
-  
-  // modal.style.display = "block";
-
-
-  // When the user clicks on <span> (x), close the modal
-  
-   modal.style.display = "none";
-  // }
-
-  // When the user clicks anywhere outside of the modal, close it
-
-}
-
-
-</script>
-
-<script>
-$(document).ready(function(){
-    myDishes = data.dishes;
-    myStarters = data.starters;
-    mySides = data.sides;
-    myLocations = data.locations;
-    var i = 0;
-    for(var key in myDishes){
-
-      var $a = $("<a>", {id: "disha" + myDishes[key].id.toString(), href: "#"});
-      $a.append(myDishes[key].title + " $" + myDishes[key].price.toString());
-      var $h6 = $("<h6>", {id: "dishh6" + myDishes[key].id.toString(), class: "heading font-x1"});
-      var $article = $("<article>", {id: "dishArticle" + myDishes[key].id.toString(), class: "bgded overlay", style:"background-image:url('"+ myDishes[key].url +"');"});
-      var liClassStr = (i%3==0)?"one_third first btmspace-30": "one_third btmspace-30";
-      var $li = $("<li>", {id: "dishli" + myDishes[key].id.toString(), class: liClassStr});
-      var $frame = $("<a>", {id: myDishes[key].title, href: "#startersHeading", onclick:"changeSelectedDish(this); return true;", name:"dishes"});
-      $h6.append($a);
-      $article.append($h6);
-      $li.append($article);
-      $frame.append($li);
-      $('#dishesPage').append($frame);
-      i = i + 1;
-
-    }
-
-    i = 0;
-    for(var key in myStarters){
-        var $a = $("<a>", {id: "startera" + myStarters[key].id.toString(), href: "#"});
-        $a.append(myStarters[key].title + " $" + myStarters[key].price.toString());
-        var $h6 = $("<h6>", {id: "starterh6" + myStarters[key].id.toString(), class: "heading font-x1"});
-        var $article = $("<article>", {id: "starterArticle" + myStarters[key].id.toString(), class: "bgded overlay", style:"background-image:url('"+ myStarters[key].url +"');"});
-        var liClassStr = (i%3==0)?"one_third first btmspace-30": "one_third btmspace-30";
-        var $li = $("<li>", {id: "starterli" + myStarters[key].id.toString(), class: liClassStr});
-        var $frame = $("<a>", {id: myStarters[key].title, href:"#pickUpLocationsHeading", onclick:"changeSelectedStarter(this)", name:"starters"});
-        $h6.append($a);
-        $article.append($h6);
-        $li.append($article);
-        $frame.append($li);
-        $('#startersPage').append($frame);
-        i = i + 1;
-    }
-
-    for(var key in mySides){
-      var $a = $("<a>", {id: "sidea" + mySides[key].id.toString(), href: "#startersSubHeader"});
-      $a.append(mySides[key].title);
-      $('#startersSubHeader').append($a);
-    }
-
-    i = 0;
-    for(var key in myLocations){
-        var $a = $("<a>", {id: "locationa" + myLocations[key].id.toString(), href: "#"});
-        $a.append(myLocations[key].title + "(" + myLocations[key].description) + ")";
-        var $h6 = $("<h6>", {id: "locationh6" + myLocations[key].id.toString(), class: "heading font-x1"});
-        var $article = $("<article>", {id: "locationArticle" + myLocations[key].id.toString(), class: "bgded overlay", style:"background-image:url('"+ myLocations[key].url +"');"});
-        var liClassStr = (i%2==0)?"one_half first btmspace-30": "one_half btmspace-30";
-        var $li = $("<li>", {id: "locationli" + myLocations[key].id.toString(), class: liClassStr});
-        var $mapLink = $("<a>", { href:myLocations[key].mapUrl});
-        $mapLink.append("Google Maps");
-        var $frame = $("<a>", {id: myLocations[key].title, href:"#userContactHeading", onclick:"changeSelectedPickUpLocation(this)", name:"pickUpLocations"});
-        $h6.append($a);
-        $article.append($h6);
-        $li.append($article);
-        $frame.append($li);
-        // $frame.append($mapLink);
-        $('#pickUpLocationsPage').append($frame);
-        i = i + 1;
-    }
-
-
-});
-</script>
-
-<script>
-function changeSelectedDish(param) {
-  myDishes = data.dishes;
-
-  var dishes = document.getElementsByName('dishes');
-  var selected_dish = param.id;
-  var selected_dish_price = 0;
-
-  for(var i = 0; i < dishes.length; i++){
-      console.log("loop");
-      if(dishes[i].id == selected_dish){
-        var dish = document.getElementById(selected_dish);
-        dish.className = "selected";
-        selected_dish_price = myDishes[selected_dish].price;
-
-      } else {
-        var dish = document.getElementById(dishes[i].id);
-        dish.className = "";
-      }
-  }
-  
-  document.getElementById('final_dish_name').value = selected_dish;
-  document.getElementById('final_dish_price').value = selected_dish_price;
-
-}
-</script>
-
-<script>
-function changeSelectedStarter(param) {
-  myStarters = data.starters;
-
-  var starters = document.getElementsByName('starters');
-  var selected_starter = param.id;
-  var selected_starter_price = 0;
-
-  for(var i = 0; i < starters.length; i++){
-      if(starters[i].id == selected_starter){
-        var starter = document.getElementById(selected_starter);
-        starter.className = "selected";
-        selected_starter_price = myStarters[selected_starter].price;
-
-      } else {
-        var starter = document.getElementById(starters[i].id);
-        starter.className = "";
-        
-      }
-  }
-
-  document.getElementById('final_starter_name').value = selected_starter;
-  document.getElementById('final_starter_price').value = selected_starter_price;
-
-}
-</script>
-
-<script>
-function changeSelectedPickUpLocation(param) {
-
-  var pickUpLocations = document.getElementsByName('pickUpLocations');
-  var selectedPickUpLocation = param.id;
-
-  for(var i = 0; i < pickUpLocations.length; i++){
-      if(pickUpLocations[i].id == selectedPickUpLocation){
-        var pickUpLocation = document.getElementById(selectedPickUpLocation);
-        pickUpLocation.className = "selected";
-
-      } else {
-        var pickUpLocation = document.getElementById(pickUpLocations[i].id);
-        pickUpLocation.className = "";
-      }
-  }
-
-  document.getElementById('final_pickUpLocation').value = selectedPickUpLocation;
-
-}
-</script>
-
-<script>
-// function calculatePickUpLocation() {
-//   var pickupLocations = document.getElementById('pickupLocationForm');
-//   var selected_pickupLocation = "";
-
-//   for(var i = 0; i < pickupLocations.length; i++){
-//       if(pickupLocations[i].checked){
-//           selected_pickupLocation = pickupLocations[i].value;
-//       }
-//   }
-//   document.getElementById('final_pickup_location').innerHTML = selected_pickupLocation;
-  
-//   var wechat_nickname = document.getElementById('input_wechat_nickname');
-//   var input_wechat_nickname = "";
-//   console.log(wechat_nickname);
-//   input_wechat_nickname = wechat_nickname.value;
-
-//   document.getElementById('final_input_wechat_nickname').innerHTML = input_wechat_nickname;
-
-
-//   var phone = document.getElementById('input_phone');
-//   var input_phone = "";
-//   input_phone = phone.value;
-
-//   document.getElementById('final_input_phone').innerHTML = input_phone;
-
-//   var email = document.getElementById('input_email');
-//   var input_email = "";
-//   input_email = email.value;
-  
-//   document.getElementById('final_input_email').innerHTML = input_email;
-
-//   var dishes = document.getElementById('dishForm');
-//   var selected_dish = "";
-//   var selected_dish_price = 0;
-//   for(var i = 0; i < dishes.length; i++){
-//       if(dishes[i].checked){
-//           selected_dish = dishes[i].id;
-//           selected_dish_price = dishes[i].value;
-//       }
-//   }
-  
-//   var sides = document.getElementById('sideForm');
-//   var selected_side = "";
-//   var selected_side_price = 0;
-//   for(var i = 0; i < sides.length; i++){
-//       if(sides[i].checked){
-//           selected_side = sides[i].id;
-//           selected_side_price = sides[i].value;
-//       }
-//   }
-
-//   var totalAmount = (parse(selected_dish_price) + parseFloat(selected_side_price)) * 1.1).toFixed(2);
-//   var totalAmountString = totalAmount.toString();
-
-//   document.getElementById('final_dish_name').innerHTML = selected_dish + "+" + selected_side;
-//   document.getElementById('final_price').innerHTML = totalAmountString + "(税后)";
- 
-
-//   var dataString = "price=" + totalAmountString;
-//   $.ajax({
-//     //url: 'http://tiantianmeishidelicious.com:443/getHash',
-//     url: 'http://localhost:443/getHash',
-//     type: 'GET',
-//     data: dataString, // or $('#myform').serializeArray()
-//     success: function(response) { 
-//       document.getElementById('submission_login').value = response.login;
-//       document.getElementById('submission_amount').value = totalAmountString;
-//       document.getElementById('submission_sequence').value = response.sequence;
-//       document.getElementById('submission_timestamp').value = response.timeStamp;
-//       document.getElementById('submission_currency').value = response.currency;
-//       document.getElementById('submission_hash').value = response.hash;
-//       document.getElementById('submission_show_form').value = response.showForm;
-//      }
-// });
-// }
-</script>
-<script>
-$(document).ready(function(){
-  // Add smooth scrolling to all links
-  $("a").on('click', function(event) {
-    // Make sure this.hash has a value before overriding default behavior
-    if (this.hash !== "") {
-      // Prevent default anchor click behavior
-      event.preventDefault();
-
-      // Store hash
-      var hash = this.hash;
-
-      // Using jQuery's animate() method to add smooth page scroll
-      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
-      $('html, body').animate({
-        scrollTop: $(hash).offset().top
-      }, 800, function(){
-   
-        // Add hash (#) to URL when done scrolling (default click behavior)
-        window.location.hash = hash;
-      });
-    } // End if
-  });
-});
-</script>
-  
-</head>
-<body id="top">
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- Top Background Image Wrapper -->
-<div class="bgded overlay" style="background-image:url('images/demo/backgrounds/01.jpg');"> 
-  <!-- ################################################################################################ -->
-  <div class="wrapper row0">
-    <div id="topbar" class="hoc clear"> 
-      <!-- ################################################################################################ -->
-      <div class="fl_left">
-        <ul class="nospace">
-          <li><a href="#"><i class="fa fa-lg fa-home"></i></a></li>
-          <li><a href="#">CONTACT</a></li>
-        </ul>
-      </div>
-      <div class="fl_right">
-        <ul >
-          <li><i class="fa fa-phone"></i> +01 (425) 429 8975</li>
-          <li><i class="fa fa-weixin"></i> ttms99999</li>
-        </ul>
-      </div>
-      <!-- ################################################################################################ -->
-    </div>
-  </div>
-  <!-- ################################################################################################ -->
-  <!-- ################################################################################################ -->
-  <!-- ################################################################################################ -->
-  <div class="wrapper row1">
-    <header id="header" class="hoc clear"> 
-      <!-- ################################################################################################ -->
-      <div id="logo" class="fl_left">
-        <h1><a href="index.html">西雅图天天美食</a></h1>
-      </div>
-      <!-- ################################################################################################ -->
-      <nav id="mainav" class="fl_right">
-        <ul class="clear">
-          <li class="active">
-            <a href="/images/demo/backgrounds/taotao-wechat-qr.jpg">联系作者</a>
-          </li>
-        </ul>
-      </nav>
-      <!-- ################################################################################################ -->
-    </header>
-  </div>
-
-  <!-- ################################################################################################ -->
-  <!-- ################################################################################################ -->
-  <!-- ################################################################################################ -->
-
-  <div class="wrapper">
-    <div id="pageintro" class="hoc clear"> 
-      <!-- ################################################################################################ -->
-      <article>
-        <div>
-          <p class="heading">每周一至周五中午准时送餐，添加微信得知更多细节</p>
-          <h1 class="heading">适合中国口味的午餐</h1>
-          <p>移动端小程序即将推出，敬请期待</p>
-        </div>
-        <footer>
-          <ul class="nospace inline pushright">
-            <li><a id="startOrderingButton" class="btn" href="#dishesHeading">开始订餐</a></li>
-          </ul>
-        </footer>
-      </article>
-      <!-- ################################################################################################ -->
-    </div>
-  </div>
-  <!-- ################################################################################################ -->
-</div>
-
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<div class="wrapper row2">
-  <div class="hoc container clear"> 
-    <!-- ################################################################################################ -->
-    <div id="dishesHeading" class="sectiontitle">
-      <h6 class="heading">今日主菜</h6>
-      <p>请点击选择一样主菜</p>
-      <input type="hidden" name="checkList" id="final_dish_name" value="">
-      <input type="hidden" name="checkList" id="final_dish_price" value="">
-    </div>
-    <ul id="dishesPage" class="nospace group services">
-    </ul>
-    <!-- ################################################################################################ -->
-  </div>
-</div>
-
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<div class="wrapper row3">
-  <div class="hoc container clear"> 
-    <div id="startersHeading" class="sectiontitle">
-      <h6 class="heading">今日配菜</h6>
-      <p id="startersSubHeader">选配菜送小凉菜</p>
-      <input type="hidden" name="checkList" id="final_starter_name" value="">
-      <input type="hidden" name="checkList" id="final_starter_price" value="">
-    </div>
-    <!-- ################################################################################################ -->
-    <ul id="startersPage" class="nospace group services">
- 
-    </ul>
-    <!-- ################################################################################################ -->
-  </div>
-</div>
-
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-
-<div class="wrapper row2">
-  <div class="hoc container clear"> 
-    <div id="pickUpLocationsHeading" class="sectiontitle">
-      <h6 class="heading">取餐地点</h6>
-      <p>请点击选择取餐地点</p>
-      <input type="hidden" name="checkList" id="final_pickUpLocation" value="">
-    </div>
-
-    <!-- ################################################################################################ -->
-    <ul id="pickUpLocationsPage" class="nospace group services">
-    </ul>
-    <!-- ################################################################################################ -->
-  </div>
-</div>
-
-<div class="wrapper row3">
-  <main class="hoc container clear"> 
-    <div id="userContactHeading" class="sectiontitle">
-      <h6 class="heading">联系方式</h6>
-      <p>请填写联系方式</p>
-    </div>
-    <!-- main body -->
-    <!-- ################################################################################################ -->
-    <div class="content"> 
-      <!-- ################################################################################################ -->
-      <div id="comments">
-        <form action="#">
-          <div class="one_third first">
-            <label for="nickname">微信昵称 <span>*</span></label>
-            <input type="text" name="checkList" id="nickname" value="" size="25">
-          </div>
-          <div class="one_third">
-            <label for="tel">电话 <span>*</span></label>
-            <input type="tel" name="checkList" id="tel" value="" size="25" >
-          </div>
-          <div class="one_third">
-            <label for="note">备注</label>
-            <input type="text" name="note" id="note" value="" size="25">
-          </div>
-          <input type="hidden" name="final_price" id="final_price" value="">
-          
-        </form>
-        
-      </div>
-      <button id="placeOrder" class="btn inverse" onclick="checkAndShowModel()">前去下单</button>
-      <!-- ################################################################################################ -->
-    </div>
-    <!-- ################################################################################################ -->
-    <!-- / main body -->
-    <div class="clear"></div>
-  </main>
-</div>
-                       <!-- The Modal -->
-<div id="myModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="modal-header">
-      <span class="close" onclick="closeModel()">&times;</span>
-      <h2>确认页</h2>
-    </div>
-    <div class="modal-body">
-      <p id="order_confirmation_text"></p>
-    </div>
-    <div class="modal-footer">
-      <form  id="submissionButton" action="https://checkout.globalgatewaye4.firstdata.com/payment" method="post"> 
-
-          <input id="submission_login" name="x_login" value="" type="hidden"> 
-
-          <input id="submission_amount" name="x_amount" value="" type="hidden"> 
-
-          <input id="submission_sequence" name="x_fp_sequence" value="" type="hidden"> 
-
-          <input id="submission_timestamp" name="x_fp_timestamp" value="" type="hidden"> 
-
-          <input id="submission_currency" name="x_currency_code" value="" type="hidden"> 
-
-          <input id="submission_hash" name="x_fp_hash" value="" type="hidden"> 
-
-          <input id="submission_show_form" name="x_show_form" value="" type="hidden"> 
-
-          <input id="submission_text" class="btn medium" value="在线付款" type="submit"> 
-      </form>
-                  
-    </div>
-  </div>
-
-</div>
-
-<!-- ################################################################################################
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- <div id="confirmationPage" class="wrapper bgded overlay" style="background-image:url('images/demo/backgrounds/04.jpg');">
-  <div class="wrapper row0">
-    <main class="hoc container clear">
-    <div class="content">  
-      ################################################################################################
-      <div class="sectiontitle" style="margin-bottom:30px;margin-top:40px">
-        <h2 class="heading">你的订单</h2>
-        <p>请确认菜品和价格</p>
-      </div> -->
-
-
-<!--       <form  id="submissionButton" action="https://checkout.globalgatewaye4.firstdata.com/payment" method="post"> 
-
-          <input id="submission_login" name="x_login" value="" type="hidden"> 
-
-          <input id="submission_amount" name="x_amount" value="" type="hidden"> 
-
-          <input id="submission_sequence" name="x_fp_sequence" value="" type="hidden"> 
-
-          <input id="submission_timestamp" name="x_fp_timestamp" value="" type="hidden"> 
-
-          <input id="submission_currency" name="x_currency_code" value="" type="hidden"> 
-
-          <input id="submission_hash" name="x_fp_hash" value="" type="hidden"> 
-
-          <input id="submission_show_form" name="x_show_form" value="" type="hidden"> 
-
-          <input id="submission_text" class="btn medium" value="在线付款" type="hidden"> 
-      </form> -->
-<!--     </div>
-  </main>
-  </form>
- </div>
-</div> -->
-
-<!-- ################################################################################################
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- End Top Background Image Wrapper -->
-<div class="wrapper row4">
-  <footer id="footer" class="hoc clear"> 
-    <!-- ################################################################################################ -->
-    <div class="one_half first">
-      <h6 class="heading">天天美食外卖订餐</h6>
-      <p class="btmspace-30">每周一至周五中午准时送餐，添加微信得知更多细节</p>
-      <ul class="nospace linklist contact">
-        <li><i class="fa fa-map-marker"></i>
-          <address>
-          Great Seattle Area, WA 98100, USA
-          </address>
-        </li>
-        <li><i class="fa fa-phone"></i> +01 (425) 429 8975</li>
-        <li><i class="fa fa-weixin"></i> ttms99999</li>
-      </ul>
-    </div>
-    <!-- ################################################################################################ -->
-  </footer>
-</div>
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<!-- ################################################################################################ -->
-<div class="wrapper row5">
-  <div id="copyright" class="hoc clear"> 
-    <!-- ################################################################################################ -->
-    <p class="fl_left">Copyright &copy; 2017 - All Rights Reserved - <a href="#">www.tiantianmeishidelicious.com</a></p>
-    <!-- ################################################################################################ -->
-  </div>
-</div>
-
-
-<a id="backtotop" href="#top"><i class="fa fa-chevron-up"></i></a>
-<!-- JAVASCRIPTS -->
-<script src="layout/scripts/jquery.min.js"></script>
-<script src="layout/scripts/jquery.backtotop.js"></script>
-<script src="/layout/scripts/jquery.mobilemenu.js"></script>
-
-</body>
+print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
+								</section>
+
+								<section>
+									<h3 class="major">Lists</h3>
+
+									<h4>Unordered</h4>
+									<ul>
+										<li>Dolor pulvinar etiam.</li>
+										<li>Sagittis adipiscing.</li>
+										<li>Felis enim feugiat.</li>
+									</ul>
+
+									<h4>Alternate</h4>
+									<ul class="alt">
+										<li>Dolor pulvinar etiam.</li>
+										<li>Sagittis adipiscing.</li>
+										<li>Felis enim feugiat.</li>
+									</ul>
+
+									<h4>Ordered</h4>
+									<ol>
+										<li>Dolor pulvinar etiam.</li>
+										<li>Etiam vel felis viverra.</li>
+										<li>Felis enim feugiat.</li>
+										<li>Dolor pulvinar etiam.</li>
+										<li>Etiam vel felis lorem.</li>
+										<li>Felis enim et feugiat.</li>
+									</ol>
+									<h4>Icons</h4>
+									<ul class="icons">
+										<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
+									</ul>
+
+									<h4>Actions</h4>
+									<ul class="actions">
+										<li><a href="#" class="button special">Default</a></li>
+										<li><a href="#" class="button">Default</a></li>
+									</ul>
+									<ul class="actions vertical">
+										<li><a href="#" class="button special">Default</a></li>
+										<li><a href="#" class="button">Default</a></li>
+									</ul>
+								</section>
+
+								<section>
+									<h3 class="major">Table</h3>
+									<h4>Default</h4>
+									<div class="table-wrapper">
+										<table>
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Description</th>
+													<th>Price</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Item One</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Two</td>
+													<td>Vis ac commodo adipiscing arcu aliquet.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Three</td>
+													<td> Morbi faucibus arcu accumsan lorem.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Four</td>
+													<td>Vitae integer tempus condimentum.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Five</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colspan="2"></td>
+													<td>100.00</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+
+									<h4>Alternate</h4>
+									<div class="table-wrapper">
+										<table class="alt">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Description</th>
+													<th>Price</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Item One</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Two</td>
+													<td>Vis ac commodo adipiscing arcu aliquet.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Three</td>
+													<td> Morbi faucibus arcu accumsan lorem.</td>
+													<td>29.99</td>
+												</tr>
+												<tr>
+													<td>Item Four</td>
+													<td>Vitae integer tempus condimentum.</td>
+													<td>19.99</td>
+												</tr>
+												<tr>
+													<td>Item Five</td>
+													<td>Ante turpis integer aliquet porttitor.</td>
+													<td>29.99</td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colspan="2"></td>
+													<td>100.00</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</section>
+
+								<section>
+									<h3 class="major">Buttons</h3>
+									<ul class="actions">
+										<li><a href="#" class="button special">Special</a></li>
+										<li><a href="#" class="button">Default</a></li>
+									</ul>
+									<ul class="actions">
+										<li><a href="#" class="button">Default</a></li>
+										<li><a href="#" class="button small">Small</a></li>
+									</ul>
+									<ul class="actions">
+										<li><a href="#" class="button special icon fa-download">Icon</a></li>
+										<li><a href="#" class="button icon fa-download">Icon</a></li>
+									</ul>
+									<ul class="actions">
+										<li><span class="button special disabled">Disabled</span></li>
+										<li><span class="button disabled">Disabled</span></li>
+									</ul>
+								</section>
+
+								<section>
+									<h3 class="major">Form</h3>
+									<form method="post" action="#">
+										<div class="field half first">
+											<label for="demo-name">Name</label>
+											<input type="text" name="demo-name" id="demo-name" value="" placeholder="Jane Doe" />
+										</div>
+										<div class="field half">
+											<label for="demo-email">Email</label>
+											<input type="email" name="demo-email" id="demo-email" value="" placeholder="jane@untitled.tld" />
+										</div>
+										<div class="field">
+											<label for="demo-category">Category</label>
+											<div class="select-wrapper">
+												<select name="demo-category" id="demo-category">
+													<option value="">-</option>
+													<option value="1">Manufacturing</option>
+													<option value="1">Shipping</option>
+													<option value="1">Administration</option>
+													<option value="1">Human Resources</option>
+												</select>
+											</div>
+										</div>
+										<div class="field half first">
+											<input type="radio" id="demo-priority-low" name="demo-priority" checked>
+											<label for="demo-priority-low">Low</label>
+										</div>
+										<div class="field half">
+											<input type="radio" id="demo-priority-high" name="demo-priority">
+											<label for="demo-priority-high">High</label>
+										</div>
+										<div class="field half first">
+											<input type="checkbox" id="demo-copy" name="demo-copy">
+											<label for="demo-copy">Email me a copy</label>
+										</div>
+										<div class="field half">
+											<input type="checkbox" id="demo-human" name="demo-human" checked>
+											<label for="demo-human">Not a robot</label>
+										</div>
+										<div class="field">
+											<label for="demo-message">Message</label>
+											<textarea name="demo-message" id="demo-message" placeholder="Enter your message" rows="6"></textarea>
+										</div>
+										<ul class="actions">
+											<li><input type="submit" value="Send Message" class="special" /></li>
+											<li><input type="reset" value="Reset" /></li>
+										</ul>
+									</form>
+								</section>
+
+							</article>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+							
+						<ul id="contact" class="icons"> 
+				            <li><i class="fa fa-phone"></i> +01 (425) 429 8975</li>
+				            <li><i class="fa fa-weixin"></i> ttms99999</li>
+				            
+						</ul>
+							
+						<p class="copyright">&copy; Tiantian Gourmet. All rights reserved </p>
+						<p class="copyright"><a href="/images/taotao-wechat-qr.jpg">@Author</a></p>
+					</footer>
+
+			</div>
+
+		<!-- BG -->
+			<div id="bg"></div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
 </html>
