@@ -1,0 +1,21 @@
+{
+     "鱼香肉丝":{
+         "title": "鱼香肉丝",
+         "id": 0,
+         "price": 10.50,
+         "url":"images/yuxiangrousi.jpg"
+     },
+     "宫保鸡丁":{
+         "title": "宫保鸡丁",
+         "id": 1,
+         "price": 12.50,
+         "url":"images/gongbaojiding.jpeg"
+
+     },
+     "辣炒肚丝":{
+         "title": "辣炒肚丝",
+         "id": 2,
+         "price": 14.50,
+         "url":"images/lachaodusi.jpg"
+     }
+}

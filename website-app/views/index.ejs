@@ -14,20 +14,22 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-		<script type="text/javascript" src="menu.json"></script>
+		<!-- <script type="text/javascript" src="menu.json"></script> -->
 		<script>
 			$(document).ready(function(){
-			    myDishes = data.dishes;
-			    myStarters = data.starters;
-			    mySides = data.sides;
-			    myLocations = data.locations;
+				console.log('<%= login %>');
+				console.log('<%= dishes %>');
+			    var myDishes = JSON.parse('<%- JSON.stringify(dishes) %>');
+			    var myStarters = JSON.parse('<%- JSON.stringify(starters) %>');
+			    var mySides = JSON.parse('<%- JSON.stringify(sides) %>');
+			    var myLocations = JSON.parse('<%- JSON.stringify(locations) %>');
 			    var i = 0;
 			    // console.log("data");
-			    // console.log(myDishes);
+			    
 			    for(var key in myDishes){
 			    	// console.log("i");
 			      var $tr = $("<tr>");
-			      
+			      console.log(myDishes[key].url);
 			      $a = $("<a>");
 			      $a.attr("onclick","selectDish(this)");
 			      $a.attr("href","#selectStarter");
@@ -127,10 +129,10 @@
 				function selectStarter() {
 					var starterInputs = document.getElementById('starterlist');
 					console.log(starterInputs);
-					// var note = document.getElementById('confirm_note');
-					// console.log(document.getElementById('note'));
-					// console.log(document.getElementById('note').value);
-					// note.innerHTML = document.getElementById('note').value;
+					var note = document.getElementById('confirm_note');
+					console.log(document.getElementById('note'));
+					console.log(document.getElementById('note').value);
+					note.innerHTML = document.getElementById('note').value;
 					for (var i = 0; i < starterInputs.children.length; i ++){
 						if (starterInputs.children[i].children[0].checked) {
 							var selectedStarter = document.getElementById('confirm_selected_starter');
@@ -237,8 +239,9 @@
 					      document.getElementById('submission_nickname').value = document.getElementById('confirm_name').innerText;
 					      document.getElementById('submission_phone').value = document.getElementById('confirm_phone').innerText;
 					      document.getElementById('submission_pickup_location').value = document.getElementById('confirm_pickup_location').innerText;
-					      document.getElementById('submission_description').value = dishStr + "+" + starterStr;
-					      // document.getElementById('submission_note').value = document.getElementById("confirm_note").innerText;
+					      document.getElementById('submission_dish').value = dishStr;
+					      document.getElementById('submission_starter').value = starterStr;
+					      document.getElementById('submission_note').value = document.getElementById("confirm_note").innerText;
 					     }
 					});
 
@@ -307,10 +310,10 @@
 										<div id = "starterlist">
 
 										</div>
-<!-- 										<div class="field first">
+										<div class="field first">
 											<label for="note">备注</label>
-											<input type="text" name="note" id="note" placeholder="Your Note Here" required maxlength="16"/>
-										</div> -->
+											<input type="text" name="note" id="note" placeholder="Your Note Here" required maxlength="32"/>
+										</div>
 										<ul class="actions first">
 											<!-- <li><input type="submit" value="下一步" class="special" /></li> -->
 											<li><a href="#pickupInfo" onclick="return selectStarter()" class="button special" />下一步</a></li>
@@ -370,11 +373,11 @@
 													<td id="confirm_pickup_location"></td>
 													
 												</tr>
-<!-- 												<tr>
+												<tr>
 													<td>备注</td>
 													<td id="confirm_note"></td>
 													
-												</tr> -->
+												</tr>
 												<tr>
 													<td id="confirm_selected_dish"></td>
 													<td id="confirm_selected_dish_price"></td>
@@ -440,9 +443,12 @@
 								          
 								          <input id="submission_phone" name="x_phone" type="hidden" value="" maxlength="32"/>
 
-								          <input id="submission_description" name="x_description" type="hidden" value="" />
+								          <input id="submission_note" name="x_description" type="hidden" value="" maxlength="32"/>
 
-<!-- 								          <input id="submission_note" name="x_note" type="hidden" value="" maxlength="16"/> -->
+								          <input id="submission_dish" name="x_ship_to_first_name" type="hidden" value="" maxlength="32"/>
+
+								          <input id="submission_starter" name="x_ship_to_last_name" type="hidden" value="" maxlength="32"/>
+
 								      </form>
 <!-- 								<ul class="icons">
 									<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
