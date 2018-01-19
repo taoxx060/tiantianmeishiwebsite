@@ -17,19 +17,15 @@
 		<!-- <script type="text/javascript" src="menu.json"></script> -->
 		<script>
 			$(document).ready(function(){
-				console.log('<%= login %>');
-				console.log('<%= dishes %>');
 			    var myDishes = JSON.parse('<%- JSON.stringify(dishes) %>');
 			    var myStarters = JSON.parse('<%- JSON.stringify(starters) %>');
 			    var mySides = JSON.parse('<%- JSON.stringify(sides) %>');
 			    var myLocations = JSON.parse('<%- JSON.stringify(locations) %>');
 			    var i = 0;
-			    // console.log("data");
 			    
 			    for(var key in myDishes){
-			    	// console.log("i");
+
 			      var $tr = $("<tr>");
-			      console.log(myDishes[key].url);
 			      $a = $("<a>");
 			      $a.attr("onclick","selectDish(this)");
 			      $a.attr("href","#selectStarter");
@@ -57,10 +53,8 @@
 			    }
 
 			    i = 0;
-			    // console.log("data");
-			    // console.log(myDishes);
+
 			    for(var key in myStarters){
-			    	// console.log("i");
 				  var div_str = (i%2==0)?"field first": "field";
 			      var $div = $("<div>", {class: div_str});
 			      var $input = $("<input>", {type:"radio", id: "starterOption" + myStarters[key].id.toString(), name: "starterOption"});
@@ -111,9 +105,7 @@
 			</script>
 			<script>
 				function selectDish(param) {
-					console.log(param);
 					var selectedDishImg = document.getElementById('selectedDishImg');
-					console.log(selectedDishImg);
 					selectedDishImg.setAttribute('src', param.children[0].firstElementChild['src']);
 					var selectedDishTitle = document.getElementById('selectedDishTitle');
 					selectedDishTitle.innerText = param.children[1].innerText;
@@ -128,19 +120,14 @@
 			<script>
 				function selectStarter() {
 					var starterInputs = document.getElementById('starterlist');
-					console.log(starterInputs);
-					var note = document.getElementById('confirm_note');
-					console.log(document.getElementById('note'));
-					console.log(document.getElementById('note').value);
+					var note = document.getElementById('confirm_note');;
 					note.innerHTML = document.getElementById('note').value;
 					for (var i = 0; i < starterInputs.children.length; i ++){
 						if (starterInputs.children[i].children[0].checked) {
 							var selectedStarter = document.getElementById('confirm_selected_starter');
 							var selectedStarterPrice = document.getElementById('confirm_selected_starter_price');
 							selectedStarter.innerText = starterInputs.children[i].children[1].children[0].innerText;
-							console.log(selectedStarter.innerText);
 							selectedStarterPrice.innerText = starterInputs.children[i].children[1].children[1].innerText;
-							console.log(selectedStarterPrice.innerText);
 							return true;
 						}
 					}
@@ -153,7 +140,6 @@
 			<script>
 				function checkPickUpLocation() {
 					var pickupInputs = document.getElementById('pickupLocation');
-					console.log(pickupInputs);
 					for (var i = 0; i < pickupInputs.children.length; i ++){
 						if (pickupInputs.children[i].children[0].checked) {
 							var selectedPickUpLocation = document.getElementById('confirm_pickup_location');
@@ -167,7 +153,6 @@
 
 				function checkNickName() {
 					var name = document.getElementById('name');
-					console.log(name);
 					if (name.value == "") {
 						return false
 					}
@@ -179,7 +164,6 @@
 
 				function checkPhone() {
 					var phone = document.getElementById('phone');
-					console.log(phone);
 					if (phone.value == "" || phone.value==null) {
 						return false
 					}
@@ -210,8 +194,6 @@
 					var dishPriceStr = document.getElementById("confirm_selected_dish_price").innerText;
 					var starterStr = document.getElementById("confirm_selected_starter").innerText;
 					var starterPriceStr = document.getElementById("confirm_selected_starter_price").innerText;
-					console.log(dishStr);
-					console.log(starterStr);
 
 					var totalTax = ((parseFloat(dishPriceStr) + parseFloat(starterPriceStr)) * 0.1);
 					var totalTaxString = totalTax.toFixed(2);
@@ -268,11 +250,6 @@
 						<nav>
 							<ul>
 								<li><a href="#start">开始订餐</a></li>
-<!-- 								<li><a href="#selectStarter">选择配菜</a></li>
-								<li><a href="#elements">elements</a></li>
-								<li><a href="#confirm">Confirmation</a></li>
-								<li><a href="#about">about</a></li>
-								<li><a href="#pickupInfo">PickupInfo</a></li> -->
 							</ul>
 						</nav>
 					</header>

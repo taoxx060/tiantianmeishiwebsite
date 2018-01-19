@@ -17,5 +17,43 @@
          "id": 2,
          "price": 14.50,
          "url":"images/lachaodusi.jpg"
+     },
+     "东北杀猪菜":{
+         "title": "东北杀猪菜",
+         "id": 3,
+         "price": 10.50,
+         "url":"images/dongbeishazhucai.jpg"
+     },
+     "辣椒干豆腐":{
+         "title": "辣椒干豆腐",
+         "id": 4,
+         "price": 12.50,
+         "url":"images/lajiaogandoufu.jpeg"
+
+     },
+     "鲇鱼炖豆腐":{
+         "title": "鲇鱼炖豆腐",
+         "id": 5,
+         "price": 14.50,
+         "url":"images/nianyudundoufu.jpg"
+     },
+     "坛闷红烧肉":{
+         "title": "坛闷红烧肉",
+         "id": 6,
+         "price": 10.50,
+         "url":"images/tanmenhongshaorou.jpg"
+     },
+     "五花肉炒香干":{
+         "title": "五花肉炒香干",
+         "id": 7,
+         "price": 12.50,
+         "url":"images/wuhuarouchaoxianggan.jpg"
+
+     },
+     "香肉饭":{
+         "title": "香肉饭",
+         "id": 8,
+         "price": 14.50,
+         "url":"images/xiangroufan.jpg"
      }
 }

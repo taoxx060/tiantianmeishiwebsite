@@ -14,7 +14,6 @@
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script type="text/javascript" src="menu.json"></script>
 		<script>
 			function printOrder() {
 				   var divToPrint=document.getElementById("printOrder");
@@ -52,9 +51,7 @@
 						<nav>
 							<ul>
 								<li><a href="#printOrder">查看订单</a></li>
-								<li><a href="#stop_taking_order">停止接单</a></li>
-								<li><a href="#start_taking_order">开始接单</a></li>
-								<li><a href="#renew_menu">更新菜单</a></li>
+								<li><a href="#update_menu">更新菜单</a></li>
 							</ul>
 						</nav>
 					</header>
@@ -92,28 +89,40 @@
 							</article>
 
 						<!-- Contact -->
-							<article id="pickupInfo">
-								<h2 class="major">Contact</h2>
-								<form id="pickupForm">
-									<div class="field">
-										<label for="pickupLocation">选择取餐地点 <span>*</span></label>
-										<div id="pickupLocation">
+							<article id="update_menu">
+								<section>
+									<h2 class="major">更改菜单</h2>
+									<form method="post" action="http://localhost:443/updateMenu">
+										<h3 class="major">主菜</h3>
+										<% for(var dishName in dishes) { %>
+											<div class="field first">
+												<input type="checkbox" id=<%=dishName%> name=<%=dishName%>>
+												<label for=<%=dishName%>><%=dishName%> <%=dishes[dishName].price%></label>
+											</div>
+										<% } %>
+										<h3 class="major">配菜</h3>
+										<% for(var starterName in starters) { %>
+											<div class="field first">
+												<input type="checkbox" id=<%=starterName%> name=<%=starterName%>>
+												<label for=<%=starterName%>><%=starterName%> <%=starters[starterName].price%></label>
+											</div>
+										<% } %>
+										<h3 class="major">小凉菜</h3>
+										<% for(var sideName in sides) { %>
+											<div class="field first">
+												<input type="checkbox" id=<%=sideName%> name=<%=sideName%>>
+												<label for=<%=sideName%>><%=sideName%> <%=sides[sideName].price%></label>
+											</div>
+										<% } %>
+										
+										<ul class="actions">
+											<li><input type="submit" value="更新菜单" class="special" /></li>
+											<li><input type="reset" value="清空" /></li>
+										</ul>
+										
+									</form>
+								</section>
 
-										</div>
-									</div>
-									<div class="field half first">
-										<label for="name">Name <span>*</span></label>
-										<input type="text" name="name" id="name" placeholder="Wechat Nickname" required />
-									</div>
-									<div class="field half first">
-										<label for="phone">Phone <span>*</span></label>
-										<input type="text" name="phone" id="phone" placeholder="888-888-8888" required />
-									</div>
-									<ul class="actions">
-										<!-- <li><input type="submit" value="下单" class="special" /></li> -->
-										<li><a href="#confirm" onclick="return selectPickUp()" class="button special" />下单</a></li>
-									</ul>
-								</form>
 							</article>
 
 						<!-- Contact -->
