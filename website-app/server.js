@@ -20,7 +20,7 @@ var selectedLocations = {};
 // Prod
 var login = "WSP-TIANT-OiH9EgCeJA";
 var transactionKey = "4clN6hgIsfVzwB9DnId6";
-var sequence = "1513833273410678711";
+var sequence = "1516598864787022742";
 
 
 //Test
@@ -153,6 +153,8 @@ app.get('/getHash', function (req, res) {
   hmac = crypto.createHmac("md5", transactionKey);
   checksum = login + "^" + sequence + "^" + timeStamp + "^" + amount + "^" + currency;
   hash = hmac.update(checksum).digest("hex");
+  //console.log(checksum);
+  //console.log(hash);
   res.send({login: login, sequence: sequence, timeStamp: timeStamp, amount:amount, currency: currency, hash:hash, showForm:showForm});
 
 })
