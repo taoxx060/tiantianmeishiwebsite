@@ -153,8 +153,8 @@ app.get('/getHash', function (req, res) {
   hmac = crypto.createHmac("md5", transactionKey);
   checksum = login + "^" + sequence + "^" + timeStamp + "^" + amount + "^" + currency;
   hash = hmac.update(checksum).digest("hex");
-  //console.log(checksum);
-  //console.log(hash);
+  console.log(checksum);
+  console.log(hash);
   res.send({login: login, sequence: sequence, timeStamp: timeStamp, amount:amount, currency: currency, hash:hash, showForm:showForm});
 
 })
