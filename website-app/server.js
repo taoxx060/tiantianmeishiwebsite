@@ -3,6 +3,7 @@ const app = express()
 
 const bodyParser = require('body-parser');
 const fs = require('fs');
+var cors = require('cors')
 
 var crypto = require('crypto');
 var date = new Date();
@@ -99,6 +100,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.set('view engine', 'ejs')
 
+app.use(cors());
 
 app.get('/', function (req, res) {
   var today_date = (new Date()).toString().split(' ').splice(1,3).join(' ');
@@ -203,7 +205,6 @@ app.post('/updateMenu', function (req, res) {
   });
   res.render('infoPage', {head:'更新成功', body:'请回到主页检查'});
 })
-
 
 app.listen(443, function () {
   console.log('Example app listening on port 443!')
