@@ -18,15 +18,15 @@ var selectedSides = require('./public/selectedSides.json');
 var selectedLocations = {};
 
 // Prod
-// var login = "WSP-TIANT-OiH9EgCeJA";
-// var transactionKey = "4clN6hgIsfVzwB9DnId6";
-// var sequence = "1513833273410678711";
+var login = "WSP-TIANT-OiH9EgCeJA";
+var transactionKey = "4clN6hgIsfVzwB9DnId6";
+var sequence = "1513833273410678711";
 
 
 //Test
-var login = "HCO-TIANT-309";
-var transactionKey = "uso7FRIM7obGC0F2vaFO";
-var sequence = "15148556663137086792";
+// var login = "HCO-TIANT-309";
+// var transactionKey = "uso7FRIM7obGC0F2vaFO";
+// var sequence = "15148556663137086792";
 
 var timeStamp = String(Math.floor(date.getTime()/1000));
 var amount = String(0);
