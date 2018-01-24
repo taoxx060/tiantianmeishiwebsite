@@ -42,6 +42,7 @@
 			      $a3.append(myDishes[key].price);
 
 			      $td2.append($a1);
+			      $td2.append("<br/>");
 			      $td2.append($a2);
 			      $td2.append($a3);
 			      $a.append($td1);
@@ -108,12 +109,12 @@
 					var selectedDishImg = document.getElementById('selectedDishImg');
 					selectedDishImg.setAttribute('src', param.children[0].firstElementChild['src']);
 					var selectedDishTitle = document.getElementById('selectedDishTitle');
-					selectedDishTitle.innerText = param.children[1].innerText;
+					selectedDishTitle.innerText = param.children[1].children[0].innerText + param.children[1].children[2].innerText +param.children[1].children[3].innerText;
 
 					var selectedDish = document.getElementById('confirm_selected_dish');
 					var selectedDishPrice = document.getElementById('confirm_selected_dish_price');
 					selectedDish.innerText = param.children[1].children[0].innerText;
-					selectedDishPrice.innerText = param.children[1].children[2].innerText;
+					selectedDishPrice.innerText = param.children[1].children[3].innerText;
 
 				}
 			</script>
@@ -206,10 +207,9 @@
 					 
 					var dataString = "price=" + totalAmountString;
 					$.ajax({
-					    url: 'http://tiantianmeishidelicious.com:443/getHash',
-					    //url: 'http://localhost:443/getHash',
+					    url: 'https://tiantiangourmet.com/getHash',
 					    type: 'GET',
-					    headers: {  'Access-Control-Allow-Origin': 'http://www.tiantianmeishidelicious.com:443' },
+					    headers: {  'Access-Control-Allow-Origin': 'https://tiantiangourmet.com' },
 					    data: dataString, 
 					    success: function(response) { 
 					      document.getElementById('submission_login').value = response.login;
@@ -245,7 +245,7 @@
 						<div class="content">
 							<div class="inner">
 								<h1>天天美食</h1>
-								<p>大西雅图中餐外卖</p>
+								<h2>大西雅图中餐外卖</h2>
 							</div>
 						</div>
 						<nav>
@@ -260,7 +260,7 @@
 
 						<!-- Start -->
 							<article id="start">
-								<h2 class="major">今日主菜</h2>
+								<h2 class="major">主菜</h2>
 								
 								<p>点击选择你想要的主菜.</p>
 
@@ -302,7 +302,7 @@
 
 						<!-- Contact -->
 							<article id="pickupInfo">
-								<h2 class="major">Contact</h2>
+								<h2 class="major">联系方式</h2>
 								<form id="pickupForm">
 									<div class="field">
 										<label for="pickupLocation">选择取餐地点 <span>*</span></label>
@@ -311,11 +311,11 @@
 										</div>
 									</div>
 									<div class="field half first">
-										<label for="name">Name <span>*</span></label>
+										<label for="name">姓名 <span>*</span></label>
 										<input type="text" name="name" id="name" placeholder="Wechat Nickname" required maxlength="32"/>
 									</div>
 									<div class="field half first">
-										<label for="phone">Phone <span>*</span></label>
+										<label for="phone">电话 <span>*</span></label>
 										<input type="text" name="phone" id="phone" placeholder="888-888-8888" required maxlength="32"/>
 									</div>
 									<ul class="actions">
@@ -366,13 +366,13 @@
 													<td id="confirm_selected_starter_price"></td>
 												</tr>
 												<tr>
-													<td>Tax</td>
+													<td>税</td>
 													<td id="confirm_tax"></td>
 												</tr>
 											</tbody>
 											<tfoot>
 												<tr>
-													<td>Total</td>
+													<td>总计</td>
 													<td id="confirm_total"></td>
 												</tr>
 											</tfoot>
@@ -426,7 +426,6 @@
 						</ul>
 							
 						<p class="copyright">&copy; Tiantian Gourmet. All rights reserved </p>
-						<p class="copyright"><a href="/images/taotao-wechat-qr.jpg">@Author</a></p>
 					</footer>
 
 			</div>

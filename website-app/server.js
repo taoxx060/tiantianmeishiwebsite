@@ -21,7 +21,7 @@ var selectedLocations = {};
 // Prod
 var login = "WSP-TIANT-OiH9EgCeJA";
 var transactionKey = "4clN6hgIsfVzwB9DnId6";
-var sequence = "1516598864787022742";
+var sequence = "1517016425581190439";
 
 
 //Test
@@ -41,6 +41,7 @@ var hash = hmac.update(checksum).digest("hex");
 
 var current_table = null;
 var start_date = null;
+var ifOpen = true;
 
 const mysql = require('mysql');
 const connection = mysql.createConnection({
@@ -72,14 +73,23 @@ function createTable(table_name) {
 }
 
 function updateTableAndTableName() {
-  var new_table_name = getCurrentTableName();
+  var new_table_name = getTomorrowTableName();
+  var current_date = new Date();
+  var current_hour = current_date.getHours();
   if (current_table != new_table_name) {
+    if (current_hour >= 14) {
+      current_table = new_table_name;
+    } else {
+      current_table = getTodayTableName();
+    }
+  } else {
     current_table = new_table_name;
-    createTable(current_table);
   }
+  createTable(current_table);
+
 }
 
-function getCurrentTableName() {
+function getTomorrowTableName() {
   var tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   var tomorrowDate = (tomorrow).toString().split(' ').splice(1,3).join(' ').replace(/\W+/g, '_');
@@ -87,12 +97,18 @@ function getCurrentTableName() {
   return table_name;
 }
 
-function ifNotInBusinessHour() {
-  var today = new Date().getHours();
-  if (today >= 0 && today <= 24) {
-    return false;
-  } else {
+function getTodayTableName() {
+  var today = new Date();
+  var todayDate = (today).toString().split(' ').splice(1,3).join(' ').replace(/\W+/g, '_');
+  var table_name = "orders_" + todayDate;
+  return table_name;
+}
+
+function ifInBusinessHour() {
+  if (ifOpen == true) {
     return true;
+  } else {
+    return false;
   }
 }
 
@@ -104,8 +120,8 @@ app.use(cors());
 
 app.get('/', function (req, res) {
   var today_date = (new Date()).toString().split(' ').splice(1,3).join(' ');
-  if (ifNotInBusinessHour()) {
-    res.render('infoPage', {head:"截单啦！", body: "想加单请微信联系"});
+  if (ifInBusinessHour()==false) {
+    return res.render('errPage', {head:"截单啦！", body: "想加单请微信联系"});
   }
   var tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
@@ -115,13 +131,15 @@ app.get('/', function (req, res) {
   hmac = crypto.createHmac("md5", transactionKey);
   checksum = login + "^" + sequence + "^" + timeStamp + "^" + amount + "^" + currency;
   hash = hmac.update(checksum).digest("hex");
-  res.render('index', {login: login, sequence: sequence, timeStamp: timeStamp, amount:amount, currency: currency, hash:hash, date: date, dishes: selectedDishes, starters: starters, sides: sides, locations: locations});
+  // console.log(checksum);
+  // console.log(hash);
+  return res.render('index', {login: login, sequence: sequence, timeStamp: timeStamp, amount:amount, currency: currency, hash:hash, date: date, dishes: selectedDishes, starters: selectedStarters, sides: selectedSides, locations: locations, tomorrowDate: tomorrowDate});
 })
 
 app.post('/transactions', function (req, res) {
   var today_date = (new Date()).toString().split(' ').splice(1,3).join(' ');
   if (req.body.x_response_code == '2') {
-    res.render('infoPage', {head:'付款失败', body: '此次操作不会收取任何费用 请重试或联系我们'});
+    return res.render('infoPage', {head:'付款失败', body: '此次操作不会收取任何费用 请重试或联系我们'});
   } else if (req.body.x_response_code == '1') {
     var note = req.body.x_description;
     var ship_to_address = req.body.x_ship_to_address;
@@ -143,7 +161,7 @@ app.post('/transactions', function (req, res) {
       console.log('Error while performing Query.', err);
     }
    });
-   res.render('infoPage', {head:'感谢订餐', body:'送餐前会在微信群内通知 请准时取餐'});
+   return res.render('infoPage', {head:'感谢订餐', body:'送餐前会在微信群内通知 请准时取餐'});
   }
 
 })
@@ -155,9 +173,9 @@ app.get('/getHash', function (req, res) {
   hmac = crypto.createHmac("md5", transactionKey);
   checksum = login + "^" + sequence + "^" + timeStamp + "^" + amount + "^" + currency;
   hash = hmac.update(checksum).digest("hex");
-  console.log(checksum);
-  console.log(hash);
-  res.send({login: login, sequence: sequence, timeStamp: timeStamp, amount:amount, currency: currency, hash:hash, showForm:showForm});
+  // console.log(checksum);
+  // console.log(hash);
+  return res.send({login: login, sequence: sequence, timeStamp: timeStamp, amount:amount, currency: currency, hash:hash, showForm:showForm});
 
 })
 
@@ -171,12 +189,24 @@ app.get('/control', function (req, res) {
       if (!err) {
          var rows1 = rows;
          var fields1 = fields;
-         res.render('control', {rows1: rows, fields1:fields, tomorrowDate: tomorrowDate, dishes, selectedDishes, starters: starters, sides: sides, locations:locations });
+         return res.render('control', {rows1: rows, fields1:fields, tomorrowDate: tomorrowDate, dishes: dishes, starters:starters, sides: sides, locations:locations });
       }
       else {
         console.log('Error while performing Query 1.', err);
+        return;
       }
      });
+})
+
+app.get('/setOpen', function (req, res) {
+  ifOpen = true;
+  return res.render('infoPage', {head:'更新成功', body:'请回到主页检查'});
+})
+
+
+app.get('/setClose', function (req, res) {
+  ifOpen = false;
+  return res.render('infoPage', {head:'更新成功', body:'请回到主页检查'});
 })
 
 app.post('/updateMenu', function (req, res) {
@@ -203,9 +233,9 @@ app.post('/updateMenu', function (req, res) {
   fs.writeFile('./public/selectedSides.json', JSON.stringify(selectedSides), 'utf8',  function(err) {
     if (err) throw err;
   });
-  res.render('infoPage', {head:'更新成功', body:'请回到主页检查'});
+  return res.render('infoPage', {head:'更新成功', body:'请回到主页检查'});
 })
 
-app.listen(443, function () {
-  console.log('Example app listening on port 443!')
+app.listen(8000, function () {
+  console.log('Example app listening on port 8000!')
 })

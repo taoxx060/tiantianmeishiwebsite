@@ -1,1 +1,249 @@
-{"鱼香肉丝":{"title":"鱼香肉丝","id":0,"price":10.5,"url":"images/yuxiangrousi.jpg"},"宫保鸡丁":{"title":"宫保鸡丁","id":1,"price":12.5,"url":"images/gongbaojiding.jpeg"},"辣椒干豆腐":{"title":"辣椒干豆腐","id":4,"price":12.5,"url":"images/lajiaogandoufu.jpeg"},"鲇鱼炖豆腐":{"title":"鲇鱼炖豆腐","id":5,"price":14.5,"url":"images/nianyudundoufu.jpg"},"坛闷红烧肉":{"title":"坛闷红烧肉","id":6,"price":10.5,"url":"images/tanmenhongshaorou.jpg"}}
+{   "无主菜":{
+         "title": "无主菜",
+         "id": 0,
+         "price": 0.00,
+         "url":"images/bg.jpg"
+     },
+    "黄焖鸡":{
+         "title": "黄焖鸡",
+         "id": 1,
+         "price": 12.00,
+         "url":"images/huangmenji.jpg"
+     }, "干烧鲳鱼":{
+         "title": "干烧鲳鱼",
+         "id": 2,
+         "price": 20.00,
+         "url":"images/ganshaochangyu.jpg"
+     },"鱼香肉丝":{
+         "title": "鱼香肉丝",
+         "id": 3,
+         "price": 11.00,
+         "url":"images/yuxiangrousi.jpg"
+     },"麻婆豆腐":{
+         "title": "麻婆豆腐",
+         "id": 4,
+         "price": 9.00,
+         "url":"images/mapodoufu.jpg"
+     },"辣椒干豆腐":{
+         "title": "辣椒干豆腐",
+         "id": 5,
+         "price": 9.00,
+         "url":"images/lajiaogandoufu.jpeg"
+
+     },"土豆烧牛腩":{
+         "title": "土豆烧牛腩",
+         "id": 6,
+         "price": 10.00,
+         "url":"images/tudoushaoniunan.jpg"
+
+     },"咖喱牛腩":{
+         "title": "咖喱牛腩",
+         "id": 7,
+         "price": 10.00,
+         "url":"images/galiniunan.jpg"
+
+     },"小鸡炖蘑菇":{
+         "title": "小鸡炖蘑菇",
+         "id": 8,
+         "price": 16.00,
+         "url":"images/xiaojidunmogu.jpg"
+
+     },"铁锅炖大鹅":{
+         "title": "铁锅炖大鹅",
+         "id": 9,
+         "price": 18.00,
+         "url":"images/tieguodundae.jpg"
+
+     },"白菜烩虾球":{
+         "title": "白菜烩虾球",
+         "id": 10,
+         "price": 12.00,
+         "url":"images/baicaihuixiaqiu.jpg"
+
+     },"甜辣椒炒章鱼":{
+         "title": "甜辣椒炒章鱼",
+         "id": 11,
+         "price": 12.00,
+         "url":"images/tianlajiaochaozhangyu.jpg"
+     },"香肉饭":{
+         "title": "香肉饭",
+         "id": 12,
+         "price": 10.00,
+         "url":"images/taiwanxiangroufan.jpg"
+     },"鲇鱼炖豆腐":{
+         "title": "鲇鱼炖豆腐",
+         "id": 13,
+         "price": 12.00,
+         "url":"images/nianyudundoufu.jpg"
+     },"红烧鲅鱼":{
+         "title": "红烧鲅鱼",
+         "id": 14,
+         "price": 12.00,
+         "url":"images/hongshaobayu.jpg"
+     }, "坛闷红烧肉":{
+         "title": "坛闷红烧肉",
+         "id": 15,
+         "price": 12.00,
+         "url":"images/tanmenhongshaorou.jpg"
+     },"红焖羊肉":{
+         "title": "红焖羊肉",
+         "id": 16,
+         "price": 12.00,
+         "url":"images/hongmenyangrou.jpg"
+     },"东北杀猪菜":{
+         "title": "东北杀猪菜",
+         "id": 17,
+         "price": 10.00,
+         "url":"images/dongbeishazhucai.jpg"
+     },"酸菜炖羊肉":{
+         "title": "酸菜炖羊肉",
+         "id": 18,
+         "price": 12.00,
+         "url":"images/suancaidunyangrou.jpg"
+     },"卤肉饭":{
+         "title": "卤肉饭",
+         "id": 19,
+         "price": 14.00,
+         "url":"images/luroufan.jpg"
+     },"宫保鸡丁":{
+         "title": "宫保鸡丁",
+         "id": 20,
+         "price": 12.00,
+         "url":"images/gongbaojiding.jpeg"
+     },"辣炒肚丝":{
+         "title": "辣炒肚丝",
+         "id": 21,
+         "price": 11.00,
+         "url":"images/lachaodusi.jpg"
+     },"五花肉炒香干":{
+         "title": "五花肉炒香干",
+         "id": 22,
+         "price": 10.00,
+         "url":"images/wuhuarouchaoxianggan.jpg"
+    },"肥牛金针菇":{
+         "title": "肥牛金针菇",
+         "id": 23,
+         "price": 12.00,
+         "url":"images/feiniujinzhengu.jpg"
+     },"葱爆羊肉":{
+         "title": "葱爆羊肉",
+         "id": 24,
+         "price": 11.00,
+         "url":"images/congbaoyangrou.jpg"
+     },"双椒爆牛肚":{
+         "title": "双椒爆牛肚",
+         "id": 25,
+         "price": 11.00,
+         "url":"images/shuangjiaobaoniudu.jpg"
+     },"圆葱黑椒牛柳":{
+         "title": "圆葱黑椒牛柳",
+         "id": 26,
+         "price": 10.00,
+         "url":"images/yuancongheijiaoniuliu.jpg"
+     },"家常豆腐排骨":{
+         "title": "家常豆腐排骨",
+         "id": 27,
+         "price": 10.00,
+         "url":"images/jiachangdoufupaigu.jpg"
+     },"糖醋排骨":{
+         "title": "糖醋排骨",
+         "id": 28,
+         "price": 11.00,
+         "url":"images/tangcupaigu.jpg"
+     },"红烧排骨":{
+         "title": "红烧排骨",
+         "id": 29,
+         "price": 11.00,
+         "url":"images/hongshaopaigu.jpg"
+     },"芸豆土豆排骨":{
+         "title": "芸豆土豆排骨",
+         "id": 30,
+         "price": 12.00,
+         "url":"images/yundoutudoupaigu.jpg"
+     },"西芹腰果虾仁":{
+         "title": "西芹腰果虾仁",
+         "id": 31,
+         "price": 12.00,
+         "url":"images/xiqinyaoguoxiaren.jpg"
+     },"西红柿炒鸡蛋":{
+         "title": "西红柿炒鸡蛋",
+         "id": 32,
+         "price": 8.00,
+         "url":"images/xihongshichaojidan.jpg"
+     },"甜椒炒鸡蛋":{
+         "title": "甜椒炒鸡蛋",
+         "id": 33,
+         "price": 8.00,
+         "url":"images/tianjiaochaojidan.jpg"
+     },"白菜豆腐五花肉":{
+         "title": "白菜豆腐五花肉",
+         "id": 34,
+         "price": 10.00,
+         "url":"images/baicaidoufuwuhuarou.jpg"
+     },"黄花鱼炖豆腐":{
+         "title": "黄花鱼炖豆腐",
+         "id": 35,
+         "price": 12.00,
+         "url":"images/huanghuayudundoufu.jpg"
+     },"西红柿炖牛腩":{
+         "title": "西红柿炖牛腩",
+         "id": 36,
+         "price": 10.00,
+         "url":"images/xihongshidunniunan.jpg"
+     },"鱼香茄子":{
+         "title": "鱼香茄子",
+         "id": 37,
+         "price": 10.00,
+         "url":"images/yuxiangqiezi.jpg"
+     },"地三鲜":{
+         "title": "地三鲜",
+         "id": 38,
+         "price": 9.00,
+         "url":"images/disanxian.jpg"
+     },"东北乱炖":{
+         "title": "东北乱炖",
+         "id": 39,
+         "price": 10.00,
+         "url":"images/dongbeiluandun.jpg"
+     },"青椒土豆丝":{
+         "title": "青椒土豆丝",
+         "id": 40,
+         "price": 8.00,
+         "url":"images/qingjiaotudousi.jpg"
+     },"腊肉花菜":{
+         "title": "腊肉花菜",
+         "id": 41,
+         "price": 10.00,
+         "url":"images/larouhuacai.jpg"
+     },"青椒熏肉丝":{
+         "title": "青椒熏肉丝",
+         "id": 42,
+         "price": 10.00,
+         "url":"images/qingjiaoxunrousi.jpg"
+     },"糖醋小丸子":{
+         "title": "糖醋小丸子",
+         "id": 43,
+         "price": 11.00,
+         "url":"images/tangcuxiaowanzi.jpg"
+     },"红烧狮子头":{
+         "title": "红烧狮子头",
+         "id": 44,
+         "price": 12.00,
+         "url":"images/hongshaoshizitou.jpeg"
+     },"炒鲜边":{
+         "title": "炒鲜边",
+         "id": 45,
+         "price": 11.00,
+         "url":"images/chaoxianbian.jpg"
+     },"罐味包心菜":{
+         "title": "罐味包心菜",
+         "id": 46,
+         "price": 10.00,
+         "url":"images/guanweibaoxincai.jpg"
+     },"白菜烩丸子":{
+         "title": "白菜烩丸子",
+         "id": 47,
+         "price": 10.00,
+         "url":"images/baicaihuiwanzi.jpg"
+     }
+}

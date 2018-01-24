@@ -52,6 +52,7 @@
 							<ul>
 								<li><a href="#printOrder">查看订单</a></li>
 								<li><a href="#update_menu">更新菜单</a></li>
+								<li><a href="#open_close">开单截单</a></li>
 							</ul>
 						</nav>
 					</header>
@@ -92,7 +93,7 @@
 							<article id="update_menu">
 								<section>
 									<h2 class="major">更改菜单</h2>
-									<form method="post" action="http://tiantianmeishidelicious.com/updateMenu">
+									<form method="post" action="https://tiantiangourmet.com/updateMenu">
 										<h3 class="major">主菜</h3>
 										<% for(var dishName in dishes) { %>
 											<div class="field first">
@@ -125,96 +126,23 @@
 
 							</article>
 
-						<!-- Contact -->
-							<article id="confirm">
-								<h2 class="major">确认订单</h2>
-									<div class="table-wrapper">
-										<table>
-											<thead>
-												<tr>
-													<th>选项</th>
-													<th>明细</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>姓名</td>
-													<td id="confirm_name"></td>
-												</tr>
-												<tr>
-													<td>电话</td>
-													<td id="confirm_phone"></td>
-													
-												</tr>
-												<tr>
-													<td>取餐地点</td>
-													<td id="confirm_pickup_location"></td>
-													
-												</tr>
-												<tr>
-													<td>备注</td>
-													<td id="confirm_note"></td>
-													
-												</tr>
-												<tr>
-													<td id="confirm_selected_dish"></td>
-													<td id="confirm_selected_dish_price"></td>
-													
-												</tr>
-												<tr>
-													<td id="confirm_selected_starter"></td>
-													<td id="confirm_selected_starter_price"></td>
-												</tr>
-												<tr>
-													<td>Tax</td>
-													<td id="confirm_tax"></td>
-												</tr>
-											</tbody>
-											<tfoot>
-												<tr>
-													<td>Total</td>
-													<td id="confirm_total"></td>
-												</tr>
-											</tfoot>
-										</table>
-									</div>
+						<!-- Open Close -->
+							<article id="open_close">
+								<section>
+									<h2 class="major">开单</h2>
+									<form method="get" action="https://tiantiangourmet.com/setOpen">
+										<ul class="actions">
+											<li><input type="submit" value="开单" class="special" /></li>
+										</ul>
+									</form>
+									<h2 class="major">截单</h2>
+									<form method="get" action="https://tiantiangourmet.com/setClose">
+										<ul class="actions">
+											<li><input type="submit" value="截单" class="special" /></li>
+										</ul>
+									</form>
+								</section>
 
-									  <form  id="submissionButton" action="https://demo.globalgatewaye4.firstdata.com/payment" method="post"> 
-
-								          <input id="submission_login" name="x_login" value="" type="hidden"> 
-
-								          <input id="submission_amount" name="x_amount" value="" type="hidden"> 
-
-								          <input id="submission_sequence" name="x_fp_sequence" value="" type="hidden"> 
-
-								          <input id="submission_timestamp" name="x_fp_timestamp" value="" type="hidden"> 
-
-								          <input id="submission_currency" name="x_currency_code" value="" type="hidden"> 
-
-								          <input id="submission_hash" name="x_fp_hash" value="" type="hidden"> 
-
-								          <input id="submission_show_form" name="x_show_form" value="" type="hidden">
-
-								          <input id="submission_button" class="button special" value="在线付款" type="submit"> 
-
-								          <input name="enable_level3_processing" type="hidden" value="TRUE" />
-
-								          <input id="submission_nickname" name="x_cust_id" type="hidden" value="" />
-
-								          <input id="submission_pickup_location" name="x_ship_to_address" type="hidden" value="" />
-								          
-								          <input id="submission_phone" name="x_phone" type="hidden" value="" />
-
-								          <input id="submission_description" name="x_description" type="hidden" value="" />
-
-								          <input id="submission_note" name="x_note" type="hidden" value="" />
-								      </form>
-<!-- 								<ul class="icons">
-									<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
-								</ul> -->
 							</article>
 					</div>
 
@@ -228,7 +156,6 @@
 						</ul>
 							
 						<p class="copyright">&copy; Tiantian Gourmet. All rights reserved </p>
-						<p class="copyright"><a href="/images/taotao-wechat-qr.jpg">@Author</a></p>
 					</footer>
 
 			</div>

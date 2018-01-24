@@ -3,18 +3,67 @@
        "title": "无配菜",
        "id": 0,
        "price": 0.00,
-       "url":"images/tiaoguo.png"
-   },
-   "烤鸡翅":{
-       "title": "烤鸡翅",
+       "url":"images/bg.png"
+   },"秘制烤牛排":{
+       "title": "秘制烤牛排",
        "id": 1,
-       "price": 2.50,
-       "url":"images/kaojichi.jpg"
-   },
-   "秘制烤猪排":{
-       "title": "秘制烤猪排",
+       "price": 4.00,
+       "url":"images/mizhikaoniupai.jpg"
+   },"炭烤鳗鱼":{
+       "title": "炭烤鳗鱼",
        "id": 2,
-       "price": 2.50,
-       "url":"images/mizhikaozhupai.jpg"
+       "price": 4.00,
+       "url":"images/tankaomanyu.jpg"
+   },"烤羊排":{
+       "title": "烤羊排",
+       "id": 3,
+       "price": 4.00,
+       "url":"images/kaoyangpai.jpg"
+   },"炸虾球":{
+       "title": "炸虾球",
+       "id": 4,
+       "price": 4.00,
+       "url":"images/zhaxiaqiu.jpg"
+   },"烤猪排":{
+       "title": "烤猪排",
+       "id": 5,
+       "price": 3.00,
+       "url":"images/kaozhupai.jpg"
+   },"烤牛肋骨":{
+       "title": "烤牛肋骨",
+       "id": 6,
+       "price": 3.00,
+       "url":"images/kaoniuleigu.jpg"
+   },"烤牛仔骨":{
+       "title": "烤牛仔骨",
+       "id": 7,
+       "price": 3.00,
+       "url":"images/kaoniuzaigu.jpg"
+   }, "烤鸡翅":{
+       "title": "烤鸡翅",
+       "id": 8,
+       "price": 3.00,
+       "url":"images/kaojichi.jpg"
+   }, "烤鸡腿":{
+       "title": "烤鸡腿",
+       "id": 9,
+       "price": 3.00,
+       "url":"images/kaojitui.jpg"
+   },"德州扒鸡":{
+       "title": "德州扒鸡",
+       "id": 10,
+       "price": 4.00,
+       "url":"images/dezhoupaji.jpg"
+   },"酱牛肉":{
+       "title": "酱牛肉",
+       "id": 11,
+       "price": 3.00,
+       "url":"images/jiangniurou.jpg"
+   },"炸鱼":{
+       "title": "炸鱼",
+       "id": 12,
+       "price": 3.00,
+       "url":"images/jiangniurou.jpg"
    }
+   
 }

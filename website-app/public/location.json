@@ -9,8 +9,8 @@
        "亚马逊北":{
            "title": "亚马逊北",
            "id": 1,
-           "description": "501 Fairview Ave. North, Seattle 地下车库",
+           "description": "345 Boren Ave N, dawson和ruby间小广场",
            "url":"images/location.png",
-           "mapUrl":"https://www.google.com/maps/place/501+Fairview+Ave+N,+Seattle,+WA+98109/@47.6237697,-122.3346551,19.33z/data=!4m5!3m4!1s0x549015374dd6c3d5:0x878c35bf25e12c53!8m2!3d47.6236291!4d-122.3347967?shorturl=1"
+           "mapUrl":"https://www.google.com/maps/place/345+Boren+Ave+N,+Seattle,+WA+98109/@47.6217843,-122.3386875,17z/data=!3m1!4b1!4m5!3m4!1s0x5490153706d0aa51:0xa685151872db2dfb!8m2!3d47.6217807!4d-122.3364988"
        }
 }
